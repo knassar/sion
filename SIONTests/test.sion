@@ -1,0 +1,55 @@
+/* 
+    SION is Simplified, Improved Object Notation
+    This is a SION sampler for testing the parser
+*/
+{
+    // Valid JSON is valid SION
+    // But we also get comments!
+    "json": { 
+        "string": "foo",
+        "number": 1234.9012,
+        "boolean": true,
+        /* 
+            and 
+            block 
+            comments 
+        */
+        "nothin": null,
+        "array": [
+            "a",
+
+// of course, whitespace is generally ignored
+
+
+
+            "b", 
+            "c"
+        ],
+        "dict": {
+            "arr": [1, 2, "c"],
+            "dict": {
+                "foo": "bar"
+            },
+            "str": "ha!",
+            "num": 321,
+            "nil": null,
+            "boo": true
+        }
+    },
+    "keys": { // we can skip quoting dictionary keys
+        // if there is no whitespace in them
+        foo: "yay!",
+        // plus we can use single quotes to avoid escaping doubles
+        'some "key"': "cool", // <-- trailing commas are safe
+    },
+    values: [
+        "pile o' strings", 'and "strings"', // double or single quoting
+        -1234.2342, // numbers
+        true, false, // bools
+        null, // null
+        2013-06-13, // date literals!
+        2011-01-10 08:01:00, // date time literals!
+        { 'nesting': "dictionaries" /* of course */ },
+        [ 'nesting', 'arrays', 'natch' ]
+    ]
+}
