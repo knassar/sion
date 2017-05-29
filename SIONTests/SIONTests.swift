@@ -21,4 +21,12 @@ class SIONTests : XCTestCase {
         
     }
 
+    func test_KeyPaths() {
+        let sion = try! SION(raw: "{foo: {bar: {biff: [{}, {boff: 'perfect'}]}}}")
+
+        XCTAssertEqual(sion["foo", "bar", "biff", 1, "boff"].stringValue, "perfect")
+        
+        let keypath: [SIONKey] = ["foo", "bar", "biff", 1, "boff"]
+        XCTAssertEqual(sion[keypath].stringValue, "perfect")
+    }
 }

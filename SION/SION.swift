@@ -8,46 +8,37 @@
 
 import Foundation
 
+public protocol SIONKey {}
+extension String: SIONKey {}
+extension Int: SIONKey {}
+
 public struct SION {
+
+    public subscript(_ keys: SIONKey...) -> SION {
+        return self[keys]
+    }
+
+    public subscript(_ keys: [SIONKey]) -> SION {
+        var sion = self
+        for k in keys {
+            sion = sion[k]
+        }
+        return sion
+    }
     
-    public subscript(_ index: Int) -> SION {
+    public subscript(_ key: SIONKey) -> SION {
         get {
             switch type {
-            case .array:
+            case .array where key is Int:
+                let index = key as! Int
                 if let a = value as? Array<SION>, index < a.count {
                     return a[index]
                 }
                 else {
                     return SION.undefined
                 }
-            default:
-                return SION.undefined
-            }
-        }
-        set(newValue) {
-            switch type {
-            case .undefined:
-                type = .array
-                value = [SION]()
-                fallthrough
-            case .array:
-                if var a = value as? Array<SION> {
-                    while a.count < index - 1 {
-                        a.append(SION.undefined)
-                    }
-                    a[index] = newValue
-                    value = a
-                }
-            default:
-                return
-            }
-        }
-    }
-    
-    public subscript(_ key: String) -> SION {
-        get {
-            switch type {
-            case .dictionary:
+            case .dictionary where key is String:
+                let key = key as! String
                 if let d = value as? Dictionary<String, SION> {
                     return d[key] ?? SION.undefined
                 }
@@ -60,11 +51,25 @@ public struct SION {
         }
         set(newValue) {
             switch type {
-            case .undefined:
+            case .undefined where key is Int:
+                type = .array
+                value = [SION]()
+                fallthrough
+            case .array where key is Int:
+                let index = key as! Int
+                if var a = value as? Array<SION> {
+                    while a.count < index - 1 {
+                        a.append(SION.undefined)
+                    }
+                    a[index] = newValue
+                    value = a
+                }
+            case .undefined where key is String:
                 type = .dictionary
                 value = [String: SION]()
                 fallthrough
-            case .dictionary:
+            case .dictionary where key is String:
+                let key = key as! String
                 if var d = value as? Dictionary<String, SION> {
                     d[key] = newValue
                     value = d
