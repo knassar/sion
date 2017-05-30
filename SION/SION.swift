@@ -372,6 +372,13 @@ extension SION {
     
 }
 
+extension SION {
+    public init(_ date: Date) {
+        self.value = date
+        self.type = .date
+    }
+}
+
 extension SION: Hashable {
     
     public var hashValue: Int {

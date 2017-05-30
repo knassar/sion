@@ -29,4 +29,20 @@ class SIONTests : XCTestCase {
         let keypath: [SIONKey] = ["foo", "bar", "biff", 1, "boff"]
         XCTAssertEqual(sion[keypath].stringValue, "perfect")
     }
+    
+    func test_initializeRaw() {
+        let d = Date()
+        let sion = SION([
+            "foo": "bar",
+            "num": 1234,
+            "boo": true,
+            "dat": SION(d)
+            ])
+        XCTAssertEqual(sion["foo"].stringValue, "bar")
+        XCTAssertEqual(sion["num"].intValue, 1234)
+        XCTAssertEqual(sion["boo"].boolValue, true)
+        XCTAssertEqual(sion["dat"].dateValue, d)
+
+    }
+    
 }

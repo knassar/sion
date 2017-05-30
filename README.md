@@ -41,8 +41,8 @@ The Date handling needs some refinement, and it's early days–I may wind up add
 
 ```
     let sion = SION([
-        "foo": SION("bar"),
-        "biff": SION(12345),
+        "foo": "bar",
+        "biff": 12345,
         "now": SION(Date())
     ])    
 ```
@@ -53,4 +53,5 @@ The Date handling needs some refinement, and it's early days–I may wind up add
     let foo = sion["foo"].stringValue
     let bar = sion["foo"].string ?? "nothing"
     let maybeADeepValue = sion["foo"]["bar"][3]["bast"].int
+    let variadicAccess = sion["foo", "bar", 3, "bast"].int   
 ```
