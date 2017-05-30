@@ -91,7 +91,6 @@ class Parser {
     
     func chompLineComment() {
         while let char = thisChar, !Token.newlines.hasMember(char) {
-            print(thisChar ?? "", nextChar ?? "")
             advance()
         }
         advance()
@@ -99,7 +98,6 @@ class Parser {
     
     func chompBlockComment() {
         while !(thisChar == Token.star && nextChar == Token.fwdSlash) {
-            print(thisChar ?? "", nextChar ?? "")
             advance()
         }
         advance(2)
@@ -107,7 +105,6 @@ class Parser {
     
     func chompWhitespace() {
         while let char = thisChar {
-            print(char)
             if char == Token.fwdSlash && nextChar == Token.fwdSlash {
                 chompLineComment()
             }
