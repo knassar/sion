@@ -13,17 +13,37 @@ extension String: SIONKey {}
 extension Int: SIONKey {}
 
 public struct SION {
-
+    
     public subscript(_ keys: SIONKey...) -> SION {
-        return self[keys]
+        get {
+            return self[keys]
+        }
+        set(newValue) {
+            self[keys] = newValue
+        }
     }
 
     public subscript(_ keys: [SIONKey]) -> SION {
-        var sion = self
-        for k in keys {
-            sion = sion[k]
+        get {
+            var sion = self
+            for k in keys {
+                sion = sion[k]
+            }
+            return sion
         }
-        return sion
+        set(newValue) {
+            guard !keys.isEmpty else { return }
+            if keys.count == 1 {
+                self[keys[0]] = newValue
+            }
+            else {
+                var keys = keys
+                let key = keys.removeFirst()
+                var subexpr = self[key]
+                subexpr[keys] = newValue
+                self[key] = subexpr
+            }
+        }
     }
     
     public subscript(_ key: SIONKey) -> SION {
@@ -58,7 +78,7 @@ public struct SION {
             case .array where key is Int:
                 let index = key as! Int
                 if var a = value as? Array<SION> {
-                    while a.count < index - 1 {
+                    while a.count <= index {
                         a.append(SION.undefined)
                     }
                     a[index] = newValue
@@ -384,20 +404,20 @@ extension SION: Hashable {
     public var hashValue: Int {
         switch type {
         case .string:
-            return "string:\(value ?? 0)".hashValue
+            return (value as? String)?.hashValue ?? 0
         case .bool:
-            return "bool:\(value ?? 0)".hashValue
+            return (value as? Bool)?.hashValue ?? 0
         case .number:
-            return "number:\(value ?? 0)".hashValue
+            return (value as? Double)?.hashValue ?? 0
         case .date:
-            return "date:\(value ?? 0)".hashValue
+            return (value as? Date)?.hashValue ?? 0
         case .array:
             let hash = arrayValue.map { $0.hashValue } .reduce(0) { $0 ^ $1 }
             return "array:\(hash)".hashValue
         case .dictionary:
             let v = dictionaryValue
             let hash = v.keys.map { "\($0):\(v[$0]?.hashValue ?? 0)".hashValue } .reduce(0) { $0 ^ $1 }
-            return "config:\(hash)".hashValue
+            return "dict:\(hash)".hashValue
         case .undefined, .null:
             return 0
         }

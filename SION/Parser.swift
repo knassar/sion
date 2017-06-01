@@ -294,6 +294,10 @@ class Parser {
         return DateFormatter.full.date(from: string) ?? DateFormatter.dateOnly.date(from: string)
     }
 
+    static func formatDate(_ date: Date) -> String {
+        return DateFormatter.full.string(from: date)
+    }
+    
     func parseKey() throws -> String {
         chompWhitespace()
         let endChar: Character
@@ -374,7 +378,7 @@ private struct Token {
 
 extension CharacterSet {
     
-    fileprivate func hasMember(_ character: Character) -> Bool {
+    func hasMember(_ character: Character) -> Bool {
         var found = true
         for ch in String(character).utf16 {
             if !(self as NSCharacterSet).characterIsMember(ch) {

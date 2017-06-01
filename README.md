@@ -55,3 +55,15 @@ The Date handling needs some refinement, and it's early days–I may wind up add
     let maybeADeepValue = sion["foo"]["bar"][3]["bast"].int
     let variadicAccess = sion["foo", "bar", 3, "bast"].int   
 ```
+
+## Output to String with Options
+```
+    sion.stringify([.prettyPrinted, .sortKeys])
+```
+
+## Auto Deep-intialization
+```
+    var sion = SION()
+    sion["foo", "bar", 3, "bast"] = 42
+    sion.stringify(.json) // {"foo":{"bar":[null,null,null,{"bast":42}]}}
+```
