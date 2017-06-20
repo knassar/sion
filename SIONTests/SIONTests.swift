@@ -12,13 +12,19 @@ import XCTest
 class SIONTests : XCTestCase {
 
     func test_rawInit() {
-        let sion = try! SION(raw: " {\n 'foo': 'bar',\n biff: \"bast\",\n date: 2017-04-01, /* Foo Bar */ \n dub: -23.56 }")
-        
+        let rawStr = " {\n 'foo': 'bar',\n biff: \"bast\",\n date: 2017-04-01, /* Foo Bar */ \n dub: -23.56 }"
+        let sion = try! SION(raw: rawStr)
         XCTAssertEqual(sion["foo"].stringValue, "bar")
         XCTAssertEqual(sion["biff"].stringValue, "bast")
         XCTAssertEqual(sion["date"].dateValue, date(2017, 4, 1))
         XCTAssertEqual(sion["dub"].numberValue, -23.56)
-        
+
+        let sion2 = try! SION(data: rawStr.data(using: .utf8)!)
+        XCTAssertEqual(sion2["foo"].stringValue, "bar")
+        XCTAssertEqual(sion2["biff"].stringValue, "bast")
+        XCTAssertEqual(sion2["date"].dateValue, date(2017, 4, 1))
+        XCTAssertEqual(sion2["dub"].numberValue, -23.56)
+
     }
 
     func test_setKey() {
@@ -73,6 +79,17 @@ class SIONTests : XCTestCase {
         XCTAssertEqual(sion["boo"].boolValue, true)
         XCTAssertEqual(sion["dat"].dateValue, d)
 
+        let sionArr = SION([
+            1234,
+            true,
+            SION(d),
+            SION(["foo": "bar"])
+            ])
+        XCTAssertEqual(sionArr[0].intValue, 1234)
+        XCTAssertEqual(sionArr[1].boolValue, true)
+        XCTAssertEqual(sionArr[2].dateValue, d)
+        XCTAssertEqual(sionArr[3]["foo"].stringValue, "bar")
+        
     }
     
     func test_stringify() {

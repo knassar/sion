@@ -185,8 +185,8 @@ public struct SION {
         }
     }
 
-    public init(raw: Data, encoding: String.Encoding = .utf8) throws {
-        guard let str = String(data: raw, encoding: encoding) else { throw Error.stringFromData }
+    public init(data: Data, encoding: String.Encoding = .utf8) throws {
+        guard let str = String(data: data, encoding: encoding) else { throw Error.stringFromData }
         try self.init(raw: str)
     }
 }
