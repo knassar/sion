@@ -1,9 +1,9 @@
 //
-//  SION.h
+//  OrderedKey.swift
 //  SION
 //
-//  Created by Karim Nassar on 5/20/17.
-//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
+//  Created by Karim Nassar on 1/14/18.
+//  Copyright © 2018 HungryMelonStudios LLC. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,14 +18,26 @@
 //  limitations under the License.
 //
 
-#import <Cocoa/Cocoa.h>
+import Foundation
 
-//! Project version number for SION.
-FOUNDATION_EXPORT double SIONVersionNumber;
+extension SION {
 
-//! Project version string for SION.
-FOUNDATION_EXPORT const unsigned char SIONVersionString[];
+    struct OrderedKey: SIONKey, Hashable {
+        let key: String
+        let order: Int
 
-// In this header, you should import all the public headers of your framework using statements like #import <SION/PublicHeader.h>
+        init(_ key: String, _ order: Int = 0) {
+            self.key = key
+            self.order = order
+        }
 
+        var hashValue: Int {
+            return key.hashValue
+        }
 
+        static func == (lhs: OrderedKey, rhs: OrderedKey) -> Bool {
+            return lhs.key == rhs.key
+        }
+    }
+
+}

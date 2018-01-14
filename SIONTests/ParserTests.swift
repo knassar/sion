@@ -3,7 +3,19 @@
 //  SIONTests
 //
 //  Created by Karim Nassar on 5/20/17.
-//  Copyright © 2017 HungryMelonStudios LLC. All rights reserved.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http://www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import XCTest
@@ -115,7 +127,7 @@ class ParserTests: XCTestCase {
             let filePath = testBundle.path(forResource: "test", ofType: "sion"),
             let string = try? String(contentsOfFile: filePath)
             else { return XCTFail() }
-        print(string)
+
         let test = try! Parser.parse(string)
         XCTAssertFalse(test.isEmpty)
 
@@ -148,12 +160,5 @@ class ParserTests: XCTestCase {
         XCTAssertEqual(test["values"][9][1].stringValue, "arrays", "nesting arrays")
 
     }
-    
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
     
 }

@@ -7,12 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C7826150200BFDE90004A958 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
 		C78538E21ED0C59F007D79AD /* SION.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78538D81ED0C59F007D79AD /* SION.framework */; };
 		C78538E71ED0C59F007D79AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538E61ED0C59F007D79AD /* ParserTests.swift */; };
 		C78538E91ED0C59F007D79AD /* SION.h in Headers */ = {isa = PBXBuildFile; fileRef = C78538DB1ED0C59F007D79AD /* SION.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C78538F31ED0C5BF007D79AD /* SION.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F21ED0C5BF007D79AD /* SION.swift */; };
 		C78538F51ED0C60E007D79AD /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F41ED0C60E007D79AD /* Parser.swift */; };
 		C78804AB1EDB8DFD003CB398 /* SIONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78804AA1EDB8DFD003CB398 /* SIONTests.swift */; };
+		C7AD6AB6200BB36F001DE68E /* SION+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB5200BB36F001DE68E /* SION+Comparison.swift */; };
+		C7AD6AB8200BB45A001DE68E /* SION+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB7200BB45A001DE68E /* SION+Error.swift */; };
+		C7AD6ABA200BB471001DE68E /* SION+Accessors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */; };
+		C7AD6ABC200BB48E001DE68E /* SION+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */; };
+		C7AD6ABE200BCC0C001DE68E /* SION+StringifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABD200BCC0C001DE68E /* SION+StringifyTests.swift */; };
+		C7AD6AC0200BD473001DE68E /* SION+AccessorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABF200BD473001DE68E /* SION+AccessorsTests.swift */; };
+		C7AD6AC2200BD4A7001DE68E /* SION+ComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AC1200BD4A7001DE68E /* SION+ComparisonTests.swift */; };
 		C7BFAAA41EDA14BE00EBA808 /* test.sion in Resources */ = {isa = PBXBuildFile; fileRef = C7BFAAA21EDA0F7700EBA808 /* test.sion */; };
 		C7CED6041EDF9D520041B879 /* SION+Stringify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CED6031EDF9D520041B879 /* SION+Stringify.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C782614F200BFDE90004A958 /* OrderedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedKey.swift; sourceTree = "<group>"; };
 		C78538D81ED0C59F007D79AD /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78538DB1ED0C59F007D79AD /* SION.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION.h; sourceTree = "<group>"; };
 		C78538DC1ED0C59F007D79AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +46,13 @@
 		C78538F21ED0C5BF007D79AD /* SION.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SION.swift; sourceTree = "<group>"; };
 		C78538F41ED0C60E007D79AD /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		C78804AA1EDB8DFD003CB398 /* SIONTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SIONTests.swift; sourceTree = "<group>"; };
+		C7AD6AB5200BB36F001DE68E /* SION+Comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+Comparison.swift"; sourceTree = "<group>"; };
+		C7AD6AB7200BB45A001DE68E /* SION+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+Error.swift"; sourceTree = "<group>"; };
+		C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+Accessors.swift"; sourceTree = "<group>"; };
+		C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+Initialization.swift"; sourceTree = "<group>"; };
+		C7AD6ABD200BCC0C001DE68E /* SION+StringifyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+StringifyTests.swift"; sourceTree = "<group>"; };
+		C7AD6ABF200BD473001DE68E /* SION+AccessorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+AccessorsTests.swift"; sourceTree = "<group>"; };
+		C7AD6AC1200BD4A7001DE68E /* SION+ComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+ComparisonTests.swift"; sourceTree = "<group>"; };
 		C7BFAAA21EDA0F7700EBA808 /* test.sion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.sion; sourceTree = "<group>"; };
 		C7CED6031EDF9D520041B879 /* SION+Stringify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SION+Stringify.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +102,11 @@
 				C78538F21ED0C5BF007D79AD /* SION.swift */,
 				C7CED6031EDF9D520041B879 /* SION+Stringify.swift */,
 				C78538F41ED0C60E007D79AD /* Parser.swift */,
+				C7AD6AB5200BB36F001DE68E /* SION+Comparison.swift */,
+				C7AD6AB7200BB45A001DE68E /* SION+Error.swift */,
+				C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */,
+				C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */,
+				C782614F200BFDE90004A958 /* OrderedKey.swift */,
 			);
 			path = SION;
 			sourceTree = "<group>";
@@ -97,6 +118,9 @@
 				C78804AA1EDB8DFD003CB398 /* SIONTests.swift */,
 				C78538E81ED0C59F007D79AD /* Info.plist */,
 				C7BFAAA21EDA0F7700EBA808 /* test.sion */,
+				C7AD6ABD200BCC0C001DE68E /* SION+StringifyTests.swift */,
+				C7AD6ABF200BD473001DE68E /* SION+AccessorsTests.swift */,
+				C7AD6AC1200BD4A7001DE68E /* SION+ComparisonTests.swift */,
 			);
 			path = SIONTests;
 			sourceTree = "<group>";
@@ -158,16 +182,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "HungryMelonStudios LLC.";
 				TargetAttributes = {
 					C78538D71ED0C59F007D79AD = {
 						CreatedOnToolsVersion = 8.3.2;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					C78538E01ED0C59F007D79AD = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -214,7 +239,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78538F51ED0C60E007D79AD /* Parser.swift in Sources */,
+				C7826150200BFDE90004A958 /* OrderedKey.swift in Sources */,
+				C7AD6ABC200BB48E001DE68E /* SION+Initialization.swift in Sources */,
+				C7AD6ABA200BB471001DE68E /* SION+Accessors.swift in Sources */,
+				C7AD6AB8200BB45A001DE68E /* SION+Error.swift in Sources */,
 				C78538F31ED0C5BF007D79AD /* SION.swift in Sources */,
+				C7AD6AB6200BB36F001DE68E /* SION+Comparison.swift in Sources */,
 				C7CED6041EDF9D520041B879 /* SION+Stringify.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,6 +254,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C78804AB1EDB8DFD003CB398 /* SIONTests.swift in Sources */,
+				C7AD6AC0200BD473001DE68E /* SION+AccessorsTests.swift in Sources */,
+				C7AD6ABE200BCC0C001DE68E /* SION+StringifyTests.swift in Sources */,
+				C7AD6AC2200BD4A7001DE68E /* SION+ComparisonTests.swift in Sources */,
 				C78538E71ED0C59F007D79AD /* ParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,7 +282,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -257,7 +292,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -302,7 +341,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -310,7 +351,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -355,7 +400,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -376,7 +422,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -389,7 +436,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SIONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -402,7 +450,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SIONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

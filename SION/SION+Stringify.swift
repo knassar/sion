@@ -3,30 +3,57 @@
 //  SION
 //
 //  Created by Karim Nassar on 5/31/17.
-//  Copyright © 2017 HungryMelonStudios LLC. All rights reserved.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http://www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import Foundation
 
-extension SION {
-    
-    public struct StringifyOptions: OptionSet {
-        public var rawValue: Int
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-        
-        /// Output valid JSON
-        public static let json = StringifyOptions(rawValue: 1 << 0)
-        /// Multi-line formatting with indentation
-        public static let pretty = StringifyOptions(rawValue: 1 << 1)
-        /// do not include a trailing comma after the last element of collections
-        public static let noTrailingComma = StringifyOptions(rawValue: 1 << 2)
-        /// sort dictionary keys for consistent output
-        public static let sortKeys = StringifyOptions(rawValue: 1 << 3)
+/**
+ Use to control the behavior of `stringify()`
+*/
+public struct StringifyOptions: OptionSet {
+    public var rawValue: Int
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
     }
 
-    public func stringify(_ options: StringifyOptions = []) -> String {
+    /// Output valid JSON
+    public static let json = StringifyOptions(rawValue: 1 << 0)
+
+    /// Multi-line formatting with indentation
+    public static let pretty = StringifyOptions(rawValue: 1 << 1)
+
+    /// do not include a trailing comma after the last element of collections
+    public static let noTrailingComma = StringifyOptions(rawValue: 1 << 2)
+
+    /// sort dictionary keys for consistent output
+    public static let sortKeys = StringifyOptions(rawValue: 1 << 3)
+}
+
+extension SION {
+
+    /**
+     Use to serialize a SION structure to a string
+
+     - returns:
+     A string representation of the SION data
+
+     - parameters:
+        - options: Specifies the behavior of serialization.
+    */
+    public func stringify(options: StringifyOptions = []) -> String {
         return stringify(options, at: 0)
     }
 
@@ -50,7 +77,7 @@ extension SION {
             return stringifyUndefined(options)
         }
     }
-    
+
     func stringifyArray(_ options: StringifyOptions, at depth: Int) -> String {
         let lPad: String
         let terminator: String
@@ -64,12 +91,10 @@ extension SION {
             braceTerminator = "\n"
             if options.contains(.noTrailingComma) || options.contains(.json) {
                 trailingComma = "\n"
-            }
-            else {
+            } else {
                 trailingComma = terminator
             }
-        }
-        else {
+        } else {
             lPad = ""
             bracePad = ""
             terminator = ","
@@ -77,18 +102,18 @@ extension SION {
             trailingComma = ""
         }
         let values = arrayValue.map { lPad + $0.stringify(options, at: depth + 1) } .joined(separator: terminator)
-        return "\(bracePad){\(braceTerminator)\(values)\(trailingComma)\(braceTerminator)\(bracePad)}"
+        return "[\(braceTerminator)\(values)\(trailingComma)\(bracePad)]"
     }
-    
+
     func stringifyBool(_ options: StringifyOptions) -> String {
         return boolValue ? "true" : "false"
     }
-    
+
     func stringifyDate(_ options: StringifyOptions) -> String {
         let dateString = Parser.formatDate(dateValue)
         return options.contains(.json) ? "\"\(dateString)\"" : dateString
     }
-    
+
     func stringifyDictionary(_ options: StringifyOptions, at depth: Int) -> String {
         let kvSeparator: String
         let lPad: String
@@ -104,12 +129,10 @@ extension SION {
             braceTerminator = "\n"
             if options.contains(.noTrailingComma) || options.contains(.json) {
                 trailingComma = "\n"
-            }
-            else {
+            } else {
                 trailingComma = kvTerminator
             }
-        }
-        else {
+        } else {
             kvSeparator = ":"
             lPad = ""
             bracePad = ""
@@ -117,63 +140,63 @@ extension SION {
             braceTerminator = ""
             trailingComma = ""
         }
-        var keys = Array(dictionaryValue.keys)
-        if options.contains(.sortKeys) {
-            keys = keys.sorted { $0 < $1 }
+        var keys: [String]
+        if let orderedDictionary = value as? [OrderedKey: SION], !options.contains(.sortKeys) {
+            keys = orderedDictionary.keys.sorted { $0.order < $1.order } .map { $0.key }
+        } else {
+            keys = Array(dictionaryValue.keys)
+            if options.contains(.sortKeys) {
+                keys = keys.sorted { $0 < $1 }
+            }
         }
         let keyValue: [String] = keys.map { key in
             let k = stringifyKey(key, options: options)
-            let v = dictionaryValue[key]?.stringify(options, at: depth + 1) ?? stringifyUndefined(options)
+            // We know there's a value for every key
+            let v = dictionaryValue[key]!.stringify(options, at: depth + 1)
             return "\(lPad)\(k)\(kvSeparator)\(v)"
         }
-        return "\(bracePad){\(braceTerminator)\(keyValue.joined(separator: kvTerminator))\(trailingComma)\(bracePad)}"
+        return "{\(braceTerminator)\(keyValue.joined(separator: kvTerminator))\(trailingComma)\(bracePad)}"
     }
-    
+
     func stringifyNull(_ options: StringifyOptions) -> String {
         return "null"
     }
-    
+
     func stringifyNumber(_ options: StringifyOptions) -> String {
         return "\(numberValue)"
     }
-    
+
     func stringifyString(_ options: StringifyOptions) -> String {
         let string = stringValue
-        if options.contains(.json) || hasMixedQuotes(string) {
-            return "\"\(escapeDoubleQuotes(string))\""
-        }
-        else if hasDoubleQuotes(string) && !hasSingleQuotes(string) {
+        if !options.contains(.json) && hasDoubleQuotes(string) && !hasSingleQuotes(string) {
             return "'\(string)'"
-        }
-        else {
-            return "\"\(string)\""
+        } else {
+            return "\"\(escapeDoubleQuotes(string))\""
         }
     }
 
     func stringifyUndefined(_ options: StringifyOptions) -> String {
-        return "null"
+        if options.contains(.json) {
+            return "null"
+        } else {
+            return "null /* value undefined */"
+        }
     }
-    
+
     func stringifyKey(_ key: String, options: StringifyOptions) -> String {
         if options.contains(.json) {
             return "\"\(escapeDoubleQuotes(key))\""
-        }
-        else if needsQuoted(key) {
-            if hasMixedQuotes(key) {
+        } else if needsQuoted(key) {
+            if hasDoubleQuotes(key) && !hasSingleQuotes(key) {
+                return "'\(key)'"
+            } else {
                 return "\"\(escapeDoubleQuotes(key))\""
             }
-            else if hasDoubleQuotes(key) {
-                return "'\(key)'"
-            }
-            else {
-                return "\"\(key)\""
-            }
-        }
-        else {
+        } else {
             return key
         }
     }
-    
+
     struct Matchers {
         static let quoteRequiredChars: CharacterSet = {
             var c = CharacterSet.whitespaces
@@ -181,29 +204,24 @@ extension SION {
             return c
         }()
         static let doubleQuote = CharacterSet(charactersIn: "\"")
-        static let singleQuote = CharacterSet(charactersIn: "'")
     }
-    
+
     struct Pretty {
         static func indent(_ depth: Int) -> String {
             return [String](repeating: "    ", count: depth).joined()
         }
     }
-    
+
     func needsQuoted(_ string: String) -> Bool {
         return string.rangeOfCharacter(from: Matchers.quoteRequiredChars) != nil
     }
 
-    func hasMixedQuotes(_ string: String) -> Bool {
-        return hasDoubleQuotes(string) && hasSingleQuotes(string)
-    }
-
     func hasDoubleQuotes(_ string: String) -> Bool {
-        return string.replacingOccurrences(of: "\\\"", with: "").rangeOfCharacter(from: Matchers.doubleQuote) != nil
+        return string.contains("\"")
     }
 
     func hasSingleQuotes(_ string: String) -> Bool {
-        return string.replacingOccurrences(of: "\\'", with: "").rangeOfCharacter(from: Matchers.singleQuote) != nil
+        return string.contains("'")
     }
 
     func escapeDoubleQuotes(_ string: String) -> String {

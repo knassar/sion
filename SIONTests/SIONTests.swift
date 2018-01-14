@@ -3,7 +3,19 @@
 //  SION
 //
 //  Created by Karim Nassar on 5/28/17.
-//  Copyright © 2017 HungryMelonStudios LLC. All rights reserved.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http://www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import XCTest
@@ -25,47 +37,56 @@ class SIONTests : XCTestCase {
         XCTAssertEqual(sion2["date"].dateValue, date(2017, 4, 1))
         XCTAssertEqual(sion2["dub"].numberValue, -23.56)
 
+        do {
+            _ = try SION(raw: "{ ")
+            XCTFail()
+        }
+        catch let err as SION.Error {
+            switch err {
+            case let .syntax(description: _, context: context):
+                XCTAssertEqual(context, "{ ")
+            default:
+                XCTFail()
+            }
+        }
+        catch {
+            XCTFail()
+        }
+
+        do {
+            _ = try SION(data: Data(bytes: [0xFF, 0xD9] as [UInt8]))
+            XCTFail()
+        }
+        catch let err as SION.Error {
+            switch err {
+            case .stringFromData:
+                break
+            default:
+                XCTFail()
+            }
+        }
+        catch {
+            XCTFail()
+        }
+
     }
 
-    func test_setKey() {
-        
-        var sion = SION()
-        sion["foo"] = "bar"
-        sion["num"] = 123.4
-        sion["tru"] = true
-        sion["arr"] = SION([1, 2, 3])
-        sion["dict"] = SION(["bar": "foo"])
-        
-        sion["dict"]["biff"] = SION(date(2017, 4, 31)!)
-        
-        XCTAssertEqual(sion["foo"].string, "bar")
-        XCTAssertEqual(sion["num"].number, 123.4)
-        XCTAssertTrue(sion["tru"].boolValue)
-        XCTAssertEqual(sion["arr"][1].int, 2)
-        XCTAssertEqual(sion["dict"]["bar"].string, "foo")
-        
-    }
-    
-    func test_getKeyPaths() {
-        let sion = try! SION(raw: "{foo: {bar: {biff: [{}, {boff: 'perfect'}]}}}")
+    func test_isEmpty() {
+        XCTAssertTrue(SION().isEmpty)
+        XCTAssertTrue(SION.undefined.isEmpty)
+        XCTAssertTrue(SION.null.isEmpty)
+        XCTAssertTrue(SION([SION]()).isEmpty)
+        XCTAssertTrue(SION(dictionary: [String: SION]()).isEmpty)
+        XCTAssertTrue(SION("").isEmpty)
 
-        XCTAssertEqual(sion["foo", "bar", "biff", 1, "boff"].stringValue, "perfect")
-        
-        let keypath: [SIONKey] = ["foo", "bar", "biff", 1, "boff"]
-        XCTAssertEqual(sion[keypath].stringValue, "perfect")
+        XCTAssertFalse(SION("x").isEmpty)
+        XCTAssertFalse(SION(true).isEmpty)
+        XCTAssertFalse(SION(false).isEmpty)
+        XCTAssertFalse(SION(123).isEmpty)
+        XCTAssertFalse(SION(0).isEmpty)
+        XCTAssertFalse(SION(Date()).isEmpty)
     }
-    
-    func test_setKeyPaths() {
-        var sion = try! SION(raw: "{foo: {bar: {}}}")
-        
-        sion["foo", "bar", "biff", 1, "boff"] = "perfect"
-        XCTAssertEqual(sion["foo", "bar", "biff", 1, "boff"].stringValue, "perfect")
-        
-        let keypath: [SIONKey] = ["foo", "bar", "biff", 0, "boff"]
-        sion[keypath] = "frist!"
-        XCTAssertEqual(sion[keypath].stringValue, "frist!")
-    }
-    
+
     func test_initializeRaw() {
         let d = Date()
         let sion = SION([
@@ -89,20 +110,6 @@ class SIONTests : XCTestCase {
         XCTAssertEqual(sionArr[1].boolValue, true)
         XCTAssertEqual(sionArr[2].dateValue, d)
         XCTAssertEqual(sionArr[3]["foo"].stringValue, "bar")
-        
-    }
-    
-    func test_stringify() {
-        let sion = try! SION(raw: " {\n 'foo': 'bar',\n biff: \"bast\",\n date: 2017-04-01, /* Foo Bar */ \n dub: -23.56 }")
-        XCTAssertEqual(sion.stringify([.json, .sortKeys]), "{\"biff\":\"bast\",\"date\":\"2017-04-01 00:00:00\",\"dub\":-23.56,\"foo\":\"bar\"}")
-        XCTAssertEqual(sion.stringify([.pretty, .sortKeys]), "{\n    biff: \"bast\",\n    date: 2017-04-01 00:00:00,\n    dub: -23.56,\n    foo: \"bar\",\n}")
-        XCTAssertEqual(sion.stringify([.pretty, .noTrailingComma, .sortKeys]), "{\n    biff: \"bast\",\n    date: 2017-04-01 00:00:00,\n    dub: -23.56,\n    foo: \"bar\"\n}")
-    }
-    
-    func test_escapeDoubleQuotes() {
-        
-        let string = "fo o'b ar \\ \"\" \\\" '\""
-        XCTAssertEqual(SION().escapeDoubleQuotes(string), "fo o'b ar \\ \\\"\\\" \\\" '\\\"")
         
     }
     

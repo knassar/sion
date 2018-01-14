@@ -3,69 +3,90 @@
 //  SION
 //
 //  Created by Karim Nassar on 5/20/17.
-//  Copyright © 2017 HungryMelonStudios LLC. All rights reserved.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  
+//      http://www.apache.org/licenses/LICENSE-2.0
+//  
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 import Foundation
 
 class Parser {
 
-    static func parse(_ raw: String) throws -> SION {
+    static func parse(_ raw: String, options: Options = []) throws -> SION {
         let p = Parser(raw: raw)
+        p.options = options
         try p.start()
         return p.sion
     }
-    
+
     static func value(from raw: String, at start: String.Index) throws -> (value: SION, index: String.Index) {
         let p = Parser(raw: raw)
         p.index = start
         try p.start()
         return (p.sion, p.index)
     }
-    
+
     init(raw: String) {
         self.raw = raw
         self.index = raw.startIndex
     }
-    
+
     private(set) public var sion = SION()
     private(set) public var error = Error.none
+    private(set) var options: Options = []
     private var raw: String
     private var index: String.Index
 
+    struct Options: OptionSet {
+        var rawValue: Int
+
+        /// Don't preserve dictionary order
+        static let unorderedDictionary = Options(rawValue: 1 << 0)
+    }
+
     // MARK: - Indexing
-    
+
     var thisChar: Character? {
         guard !atEnd else { return nil }
         return raw[index]
     }
-    
+
     var nextChar: Character? {
         guard !atEnd else { return nil }
         let i = raw.index(after: index)
         guard i != raw.endIndex else { return nil }
         return raw[i]
     }
-    
+
     var prevChar: Character? {
         guard !atStart else { return nil }
         let i = raw.index(before: index)
         guard i != raw.startIndex else { return nil }
         return raw[i]
     }
-    
+
     var atEnd: Bool {
         return index == raw.endIndex
     }
-    
+
     var atStart: Bool {
         return index == raw.startIndex
     }
-    
+
     func rewind() {
         index = raw.startIndex
     }
-    
+
     func advance() {
         if !atEnd {
             index = raw.index(after: index)
@@ -84,37 +105,34 @@ class Parser {
         advance(number)
         end = index
         index = start
-        return raw.substring(with: start..<end)
+        return String(raw[start..<end])
     }
-    
+
     // MARK: - Chomps
-    
+
     func chompLineComment() {
         while let char = thisChar, !Token.newlines.hasMember(char) {
             advance()
         }
         advance()
     }
-    
+
     func chompBlockComment() {
         while !(thisChar == Token.star && nextChar == Token.fwdSlash) {
             advance()
         }
         advance(2)
     }
-    
+
     func chompWhitespace() {
         while let char = thisChar {
             if char == Token.fwdSlash && nextChar == Token.fwdSlash {
                 chompLineComment()
-            }
-            else if char == Token.fwdSlash && nextChar == Token.star {
+            } else if char == Token.fwdSlash && nextChar == Token.star {
                 chompBlockComment()
-            }
-            else if Token.whitespaces.hasMember(char) {
+            } else if Token.whitespaces.hasMember(char) {
                 advance()
-            }
-            else {
+            } else {
                 break
             }
         }
@@ -127,36 +145,35 @@ class Parser {
             chompWhitespace()
         }
     }
-    
+
     func chompIf(matching test: String) -> Bool {
-        if peek(test.characters.count).lowercased() == test.lowercased() {
-            advance(test.characters.count)
+        if peek(test.count).lowercased() == test.lowercased() {
+            advance(test.count)
             return true
-        }
-        else {
+        } else {
             return false
         }
     }
-    
+
     func accumulateWhile(_ test: (Character) -> Bool) -> String {
         let start = index
         while let char = thisChar, test(char) {
             advance()
         }
-        return raw.substring(with: start..<index)
+        return String(raw[start..<index])
     }
-    
+
     // MARK: - Error
-    
+
     enum Error: Swift.Error {
         case none
         case syntax(at: String.Index, in: String)
         case invalidKey(at: String.Index, in: String)
         case invalidValue(at: String.Index, in: String)
     }
-    
+
     // MARK: - Parse
-    
+
     func start() throws {
         guard !self.raw.isEmpty else { return }
         chompWhitespace()
@@ -170,7 +187,13 @@ class Parser {
         case Token.dictOpen:
             sion.type = .dictionary
             advance()
-            sion.value = try parseDictionary()
+            let keyIndexValue = try parseDictionary()
+            if options.contains(.unorderedDictionary) {
+                sion.value = [String: SION](uniqueKeysWithValues: keyIndexValue.map { ($0.0, $0.2) })
+            } else {
+
+                sion.value = [SION.OrderedKey: SION](uniqueKeysWithValues: keyIndexValue.map { (SION.OrderedKey($0.0, $0.1), $0.2) })
+            }
         case Token.arrayOpen:
             sion.type = .array
             advance()
@@ -185,28 +208,29 @@ class Parser {
                 let (type, value) = try parseValueLiteral()
                 sion.type = type
                 sion.value = value
-            }
-            else {
+            } else {
                 error = .syntax(at: index, in: raw)
             }
         }
     }
-    
-    func parseDictionary() throws -> [String: SION] {
-        var dict = [String: SION]()
+
+    func parseDictionary() throws -> [(String, Int, SION)] {
+        var keyIndexValue = [(String, Int, SION)]()
+        var index = 0
         while let char = thisChar, char != Token.dictClose {
             let key = try parseKey()
             if !key.isEmpty {
                 let value = try parseValue()
                 if value.type != .undefined {
-                    dict[key] = value
+                    keyIndexValue.append((key, index, value))
+                    index += 1
                 }
             }
         }
         advance()
-        return dict
+        return keyIndexValue
     }
-    
+
     func parseArray() throws -> [SION] {
         var array = [SION]()
         chompWhitespace()
@@ -218,7 +242,7 @@ class Parser {
         advance()
         return array.filter { $0.type != .undefined }
     }
-    
+
     func parseValue() throws -> SION {
         chompWhitespace()
         guard let char = thisChar, char != Token.delimVal else { throw Error.invalidValue(at: index, in: raw) }
@@ -227,7 +251,7 @@ class Parser {
         chompValueDelim()
         return sion
     }
-    
+
     func parseString(_ delim: Character) throws -> String {
         advance()
         let startIndex = index
@@ -239,12 +263,12 @@ class Parser {
             }
             advance()
         }
-        let value = raw.substring(with: startIndex..<index)
+        let value = String(raw[startIndex..<index])
         advance()
         chompValueDelim()
         return value
     }
-    
+
     func parseValueLiteral() throws -> (SION.ValueType, Any?) {
         guard let char = thisChar else { throw Error.invalidKey(at: index, in: raw) }
         switch char {
@@ -262,8 +286,7 @@ class Parser {
                 let value = accumulateWhile { !Token.valueTerminators.hasMember($0) } .trimmingCharacters(in: Token.whitespaces)
                 if let double = Double(value) {
                     return (.number, double)
-                }
-                else if let date = parseDate(value) {
+                } else if let date = parseDate(value) {
                     return (.date, date)
                 }
             }
@@ -271,10 +294,10 @@ class Parser {
         // if we can't find a value literal
         throw Error.syntax(at: index, in: raw)
     }
-    
+
     private struct DateFormatter {
         // TODO: - currently assumes GMT
-        
+
         // Supports "YYYY-MM-DD HH:mm:ss" and "YYYY/MM/DD HH:mm:ss"
         static var full: ISO8601DateFormatter = {
             let formatter = ISO8601DateFormatter()
@@ -289,7 +312,7 @@ class Parser {
             return formatter
         }()
     }
-    
+
     func parseDate(_ string: String) -> Date? {
         return DateFormatter.full.date(from: string) ?? DateFormatter.dateOnly.date(from: string)
     }
@@ -297,7 +320,7 @@ class Parser {
     static func formatDate(_ date: Date) -> String {
         return DateFormatter.full.string(from: date)
     }
-    
+
     func parseKey() throws -> String {
         chompWhitespace()
         let endChar: Character
@@ -322,7 +345,7 @@ class Parser {
             keyStartIndex = index
             endChar = Token.delimKey
         }
-        
+
         var keyEnd = false
         while !keyEnd, let nextChar = nextChar {
             switch endChar {
@@ -339,10 +362,10 @@ class Parser {
             }
             advance()
         }
-        let key = raw.substring(with: keyStartIndex..<index)
+        let key = String(raw[keyStartIndex..<index])
         advance()
         guard !key.isEmpty else { throw Error.invalidKey(at: keyStartIndex, in: raw) }
-        
+
         chompWhitespace()
         if thisChar == Token.delimKey {
             advance()
@@ -351,7 +374,7 @@ class Parser {
 
         return key
     }
-    
+
 }
 
 private struct Token {
@@ -366,7 +389,7 @@ private struct Token {
     static let escape = Character("\\")
     static let fwdSlash = Character("/")
     static let star = Character("*")
-    
+
     // token sets
     static let whitespaces = CharacterSet.whitespacesAndNewlines
     static let newlines = CharacterSet.newlines
@@ -377,7 +400,7 @@ private struct Token {
 }
 
 extension CharacterSet {
-    
+
     func hasMember(_ character: Character) -> Bool {
         var found = true
         for ch in String(character).utf16 {
