@@ -22,9 +22,8 @@ import Foundation
 
 class Parser {
 
-    static func parse(_ raw: String, options: Options = []) throws -> SION {
+    static func parse(_ raw: String) throws -> SION {
         let p = Parser(raw: raw)
-        p.options = options
         try p.start()
         return p.sion
     }
@@ -43,16 +42,8 @@ class Parser {
 
     private(set) public var sion = SION()
     private(set) public var error = Error.none
-    private(set) var options: Options = []
     private var raw: String
     private var index: String.Index
-
-    struct Options: OptionSet {
-        var rawValue: Int
-
-        /// Don't preserve dictionary order
-        static let unorderedDictionary = Options(rawValue: 1 << 0)
-    }
 
     // MARK: - Indexing
 
@@ -188,12 +179,7 @@ class Parser {
             sion.type = .dictionary
             advance()
             let keyIndexValue = try parseDictionary()
-            if options.contains(.unorderedDictionary) {
-                sion.value = [String: SION](uniqueKeysWithValues: keyIndexValue.map { ($0.0, $0.2) })
-            } else {
-
-                sion.value = [SION.OrderedKey: SION](uniqueKeysWithValues: keyIndexValue.map { (SION.OrderedKey($0.0, $0.1), $0.2) })
-            }
+            sion.value = [SION.OrderedKey: SION](uniqueKeysWithValues: keyIndexValue)
         case Token.arrayOpen:
             sion.type = .array
             advance()
@@ -214,15 +200,15 @@ class Parser {
         }
     }
 
-    func parseDictionary() throws -> [(String, Int, SION)] {
-        var keyIndexValue = [(String, Int, SION)]()
+    func parseDictionary() throws -> [(SION.OrderedKey, SION)] {
+        var keyIndexValue = [(SION.OrderedKey, SION)]()
         var index = 0
         while let char = thisChar, char != Token.dictClose {
             let key = try parseKey()
             if !key.isEmpty {
                 let value = try parseValue()
                 if value.type != .undefined {
-                    keyIndexValue.append((key, index, value))
+                    keyIndexValue.append((SION.OrderedKey(key, index), value))
                     index += 1
                 }
             }

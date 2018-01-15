@@ -85,37 +85,35 @@ class SION_ComparisonTests: XCTestCase {
             }
             """)
 
-        let orderedDict2 = try! SION(raw: """
-            {
-                foo: "bar",
-                bar: true,
-                bast: 123,
-                biff: null,
-            }
-            """)
-
-        let orderedDict3 = SION([
-                "foo": "bar",
-                "bast": 123,
-                "bar": true,
-                "biff": SION.null,
-            ])
-
-        let unorderedDict1 = SION([
+        let orderedDict2 = SION([
             "foo": "bar",
             "bar": true,
             "bast": 123,
             "biff": SION.null,
-            ], preservingOrder: false)
+            ])
 
-        let unorderedDict2 = try! SION(raw: """
+        let orderedDict3 = try! SION(raw: """
             {
                 foo: "bar",
-                bar: true,
                 bast: 123,
+                bar: true,
                 biff: null,
             }
-            """, preservingDictionaryOrder: false)
+            """)
+
+        let unorderedDict1 = SION(unorderedDictionary: [
+            "foo": "bar",
+            "bar": true,
+            "bast": 123,
+            "biff": SION.null,
+            ])
+
+        let unorderedDict2 = SION(unorderedDictionary: [
+            "foo": "bar",
+            "bar": true,
+            "bast": 123,
+            "biff": SION.null,
+            ])
 
         // order of dictionary keys doesn't impact equality
         XCTAssertEqual(orderedDict1, unorderedDict1)

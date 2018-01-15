@@ -63,16 +63,12 @@ public struct SION {
 
      - parameters:
         - raw: The string contents of the file or string literal
-        - preservingDictionaryOrder: Default: `true`. set to false to `false` to not preserve order of dictionary keys
+
      */
-    public init(raw: String, preservingDictionaryOrder perserveOrder: Bool = true) throws {
+    public init(raw: String) throws {
         self.rawString = raw
         do {
-            var parseOptions = Parser.Options()
-            if perserveOrder == false {
-                parseOptions.insert(.unorderedDictionary)
-            }
-            let parsed = try Parser.parse(raw, options: parseOptions)
+            let parsed = try Parser.parse(raw)
             self.type = parsed.type
             self.value = parsed.value
         }
@@ -90,11 +86,10 @@ public struct SION {
      - parameters:
          - data: The data contents of the file
          - encoding: Expected `String.Encoding` to use to decode the `Data`
-         - preservingDictionaryOrder: Default: `true`. set to false to `false` to not preserve order of dictionary keys
      */
-    public init(data: Data, encoding: String.Encoding = .utf8, preservingDictionaryOrder perserveOrder: Bool = true) throws {
+    public init(data: Data, encoding: String.Encoding = .utf8) throws {
         guard let str = String(data: data, encoding: encoding) else { throw Error.stringFromData }
-        try self.init(raw: str, preservingDictionaryOrder: perserveOrder)
+        try self.init(raw: str)
     }
 
     // MARK: Identity
@@ -135,9 +130,10 @@ public struct SION {
     public var isDictionary: Bool {
         return type == .dictionary && (value is [String: SION] || value is [OrderedKey: SION])
     }
-    
-    public var isOrderedDictionary: Bool {
-        return type == .dictionary && value is [OrderedKey: SION]
+
+    /// `true` if isArray or isDictionary where key order has been preserved
+    public var isOrdered: Bool {
+        return isArray || (type == .dictionary && value is [OrderedKey: SION])
     }
 
     public var isNumber: Bool {

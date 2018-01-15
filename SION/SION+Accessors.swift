@@ -194,12 +194,12 @@ extension SION {
 
     /// The value as a dictionary, or nil. To preserve key order, use `orderedKeyValuePairs` instead.
     public var dictionary: [String: SION]? {
-        if isOrderedDictionary {
+        if isDictionary && !isOrdered {
+            return value as? [String: SION]
+        } else if isDictionary && isOrdered {
             return [String: SION](uniqueKeysWithValues:(value as! [OrderedKey: SION]).map { (k, value) in
                 return (k.key, value)
             })
-        } else if isDictionary {
-            return value as? [String: SION]
         } else {
             return nil
         }
@@ -210,10 +210,11 @@ extension SION {
         return dictionary ?? [:]
     }
 
-    /// The value as an array of `(String, SION)` tuples, or nil
-    public var orderedKeyValuePairs: [(String, SION)]? {
+    /// If it is possible to represent, returns the value as an array of `(String, SION)` tuples, or nil
+    public var keyValuePairs: [(String, SION)]? {
         guard
-            isOrderedDictionary,
+            isDictionary,
+            isOrdered,
             let dictionary = value as? [OrderedKey: SION]
             else { return nil }
 
@@ -225,8 +226,8 @@ extension SION {
     }
 
     /// The value as an array of `(String, SION)` tuples, or an empty array
-    public var orderedKeyValuePairsValue: [(String, SION)]? {
-        return orderedKeyValuePairs ?? []
+    public var keyValuePairsValue: [(String, SION)]? {
+        return keyValuePairs ?? []
     }
 
 }

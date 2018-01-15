@@ -98,7 +98,7 @@ extension SION: Hashable {
             return self == other
         }
 
-        guard let l = orderedKeyValuePairs, let r = other.orderedKeyValuePairs else {
+        guard let l = keyValuePairs, let r = other.keyValuePairs else {
             return false
         }
 

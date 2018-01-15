@@ -94,24 +94,19 @@ extension SION: ExpressibleByBooleanLiteral {
 
 extension SION {
 
-    public init(dictionary: [String: SION]) {
-        self.value = dictionary
+    /**
+     Initialize with a dictionary of [String: SION]. Order is not preserved.
+
+     - parameters:
+         - unorderedDictionary: A Swift Dictionary to initialize from
+     */
+    public init(unorderedDictionary: [String: SION]) {
+        self.value = unorderedDictionary
         self.type = .dictionary
     }
 
-    public init(_ keyValues: DictionaryLiteral<String, SION>, preservingOrder: Bool = true) {
+    public init(_ keyValues: DictionaryLiteral<String, SION>) {
         self.type = .dictionary
-
-        guard preservingOrder else {
-            var dictionary = [String: SION]()
-            for (key, value) in keyValues {
-                dictionary[key] = value
-            }
-            self.value = dictionary
-//            self.value = [String: SION](uniqueKeysWithValues: keyValues)
-            return
-        }
-
         var orderedKeyValues = [(OrderedKey, SION)]()
         for i in 0..<keyValues.count {
             orderedKeyValues.append((OrderedKey(keyValues[i].0, i), keyValues[i].1))

@@ -76,7 +76,7 @@ class SIONTests : XCTestCase {
         XCTAssertTrue(SION.undefined.isEmpty)
         XCTAssertTrue(SION.null.isEmpty)
         XCTAssertTrue(SION([SION]()).isEmpty)
-        XCTAssertTrue(SION(dictionary: [String: SION]()).isEmpty)
+        XCTAssertTrue(SION(unorderedDictionary: [String: SION]()).isEmpty)
         XCTAssertTrue(SION("").isEmpty)
 
         XCTAssertFalse(SION("x").isEmpty)
