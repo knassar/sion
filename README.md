@@ -12,7 +12,7 @@ SION is an extension of JSON intended for use as a configuration and structured 
     * `YYYY-MM-DD HH:mm:ss`
     * `YYYY/MM/DD HH:mm:ss`
  
-See the included sample file at `SIONTests/test.sion`
+See the included sample file at [`SIONTests/test.sion`](https://bitbucket.org/karimnassar/sion/src/d6839dacc4ffd0909995ebdec267533a465b8628/SIONTests/test.sion?at=master&fileviewer=file-view-default)
 
 The Swift interface for the SION type borrows heavily from the great SwiftyJSON project.
  
