@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Cocoa/Cocoa.h>
+@import Foundation;
 
 //! Project version number for SION.
 FOUNDATION_EXPORT double SIONVersionNumber;

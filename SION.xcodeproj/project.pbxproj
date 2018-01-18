@@ -7,6 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C70DEBC420111D8C009BFBF7 /* SION_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C70DEBC220111D8C009BFBF7 /* SION_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C70DEBD120111EA6009BFBF7 /* SION_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C70DEBCF20111EA6009BFBF7 /* SION_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C70DEBDE20111ED1009BFBF7 /* SION_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C70DEBDC20111ED1009BFBF7 /* SION_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C70DEBE220111EEC009BFBF7 /* SION.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F21ED0C5BF007D79AD /* SION.swift */; };
+		C70DEBE320111EEC009BFBF7 /* SION+Stringify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CED6031EDF9D520041B879 /* SION+Stringify.swift */; };
+		C70DEBE420111EEC009BFBF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F41ED0C60E007D79AD /* Parser.swift */; };
+		C70DEBE520111EEC009BFBF7 /* SION+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB5200BB36F001DE68E /* SION+Comparison.swift */; };
+		C70DEBE620111EEC009BFBF7 /* SION+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB7200BB45A001DE68E /* SION+Error.swift */; };
+		C70DEBE720111EEC009BFBF7 /* SION+Accessors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */; };
+		C70DEBE820111EEC009BFBF7 /* SION+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */; };
+		C70DEBE920111EEC009BFBF7 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
+		C70DEBEA20111EEC009BFBF7 /* SION.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F21ED0C5BF007D79AD /* SION.swift */; };
+		C70DEBEB20111EEC009BFBF7 /* SION+Stringify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CED6031EDF9D520041B879 /* SION+Stringify.swift */; };
+		C70DEBEC20111EEC009BFBF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F41ED0C60E007D79AD /* Parser.swift */; };
+		C70DEBED20111EEC009BFBF7 /* SION+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB5200BB36F001DE68E /* SION+Comparison.swift */; };
+		C70DEBEE20111EEC009BFBF7 /* SION+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB7200BB45A001DE68E /* SION+Error.swift */; };
+		C70DEBEF20111EEC009BFBF7 /* SION+Accessors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */; };
+		C70DEBF020111EEC009BFBF7 /* SION+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */; };
+		C70DEBF120111EEC009BFBF7 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
+		C70DEBF220111EED009BFBF7 /* SION.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F21ED0C5BF007D79AD /* SION.swift */; };
+		C70DEBF320111EED009BFBF7 /* SION+Stringify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CED6031EDF9D520041B879 /* SION+Stringify.swift */; };
+		C70DEBF420111EED009BFBF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F41ED0C60E007D79AD /* Parser.swift */; };
+		C70DEBF520111EED009BFBF7 /* SION+Comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB5200BB36F001DE68E /* SION+Comparison.swift */; };
+		C70DEBF620111EED009BFBF7 /* SION+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB7200BB45A001DE68E /* SION+Error.swift */; };
+		C70DEBF720111EED009BFBF7 /* SION+Accessors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */; };
+		C70DEBF820111EED009BFBF7 /* SION+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */; };
+		C70DEBF920111EED009BFBF7 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
 		C7826150200BFDE90004A958 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
 		C78538E21ED0C59F007D79AD /* SION.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78538D81ED0C59F007D79AD /* SION.framework */; };
 		C78538E71ED0C59F007D79AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538E61ED0C59F007D79AD /* ParserTests.swift */; };
@@ -36,6 +63,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C70DEBC020111D8C009BFBF7 /* SION_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70DEBC220111D8C009BFBF7 /* SION_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_iOS.h; sourceTree = "<group>"; };
+		C70DEBC320111D8C009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C70DEBCD20111EA6009BFBF7 /* SION_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70DEBCF20111EA6009BFBF7 /* SION_tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_tvOS.h; sourceTree = "<group>"; };
+		C70DEBD020111EA6009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C70DEBDA20111ED1009BFBF7 /* SION_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70DEBDC20111ED1009BFBF7 /* SION_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_watchOS.h; sourceTree = "<group>"; };
+		C70DEBDD20111ED1009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C782614F200BFDE90004A958 /* OrderedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedKey.swift; sourceTree = "<group>"; };
 		C78538D81ED0C59F007D79AD /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78538DB1ED0C59F007D79AD /* SION.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION.h; sourceTree = "<group>"; };
@@ -58,6 +94,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C70DEBBC20111D8C009BFBF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBC920111EA6009BFBF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBD620111ED1009BFBF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C78538D41ED0C59F007D79AD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -76,11 +133,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C70DEBC120111D8C009BFBF7 /* SION iOS */ = {
+			isa = PBXGroup;
+			children = (
+				C70DEBC220111D8C009BFBF7 /* SION_iOS.h */,
+				C70DEBC320111D8C009BFBF7 /* Info.plist */,
+			);
+			path = "SION iOS";
+			sourceTree = "<group>";
+		};
+		C70DEBCE20111EA6009BFBF7 /* SION tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				C70DEBCF20111EA6009BFBF7 /* SION_tvOS.h */,
+				C70DEBD020111EA6009BFBF7 /* Info.plist */,
+			);
+			path = "SION tvOS";
+			sourceTree = "<group>";
+		};
+		C70DEBDB20111ED1009BFBF7 /* SION watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				C70DEBDC20111ED1009BFBF7 /* SION_watchOS.h */,
+				C70DEBDD20111ED1009BFBF7 /* Info.plist */,
+			);
+			path = "SION watchOS";
+			sourceTree = "<group>";
+		};
 		C78538CE1ED0C59F007D79AD = {
 			isa = PBXGroup;
 			children = (
 				C78538DA1ED0C59F007D79AD /* SION */,
 				C78538E51ED0C59F007D79AD /* SIONTests */,
+				C70DEBC120111D8C009BFBF7 /* SION iOS */,
+				C70DEBCE20111EA6009BFBF7 /* SION tvOS */,
+				C70DEBDB20111ED1009BFBF7 /* SION watchOS */,
 				C78538D91ED0C59F007D79AD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +177,9 @@
 			children = (
 				C78538D81ED0C59F007D79AD /* SION.framework */,
 				C78538E11ED0C59F007D79AD /* SIONTests.xctest */,
+				C70DEBC020111D8C009BFBF7 /* SION_iOS.framework */,
+				C70DEBCD20111EA6009BFBF7 /* SION_tvOS.framework */,
+				C70DEBDA20111ED1009BFBF7 /* SION_watchOS.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +218,30 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		C70DEBBD20111D8C009BFBF7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C70DEBC420111D8C009BFBF7 /* SION_iOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBCA20111EA6009BFBF7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C70DEBD120111EA6009BFBF7 /* SION_tvOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBD720111ED1009BFBF7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C70DEBDE20111ED1009BFBF7 /* SION_watchOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C78538D51ED0C59F007D79AD /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -139,6 +253,60 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C70DEBBF20111D8C009BFBF7 /* SION iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C70DEBC520111D8C009BFBF7 /* Build configuration list for PBXNativeTarget "SION iOS" */;
+			buildPhases = (
+				C70DEBBB20111D8C009BFBF7 /* Sources */,
+				C70DEBBC20111D8C009BFBF7 /* Frameworks */,
+				C70DEBBD20111D8C009BFBF7 /* Headers */,
+				C70DEBBE20111D8C009BFBF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SION iOS";
+			productName = "SION iOS";
+			productReference = C70DEBC020111D8C009BFBF7 /* SION_iOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C70DEBCC20111EA6009BFBF7 /* SION tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C70DEBD220111EA6009BFBF7 /* Build configuration list for PBXNativeTarget "SION tvOS" */;
+			buildPhases = (
+				C70DEBC820111EA6009BFBF7 /* Sources */,
+				C70DEBC920111EA6009BFBF7 /* Frameworks */,
+				C70DEBCA20111EA6009BFBF7 /* Headers */,
+				C70DEBCB20111EA6009BFBF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SION tvOS";
+			productName = "SION tvOS";
+			productReference = C70DEBCD20111EA6009BFBF7 /* SION_tvOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C70DEBD920111ED1009BFBF7 /* SION watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C70DEBDF20111ED1009BFBF7 /* Build configuration list for PBXNativeTarget "SION watchOS" */;
+			buildPhases = (
+				C70DEBD520111ED1009BFBF7 /* Sources */,
+				C70DEBD620111ED1009BFBF7 /* Frameworks */,
+				C70DEBD720111ED1009BFBF7 /* Headers */,
+				C70DEBD820111ED1009BFBF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SION watchOS";
+			productName = "SION watchOS";
+			productReference = C70DEBDA20111ED1009BFBF7 /* SION_watchOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		C78538D71ED0C59F007D79AD /* SION */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C78538EC1ED0C59F007D79AD /* Build configuration list for PBXNativeTarget "SION" */;
@@ -185,6 +353,18 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "HungryMelonStudios LLC.";
 				TargetAttributes = {
+					C70DEBBF20111D8C009BFBF7 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					C70DEBCC20111EA6009BFBF7 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					C70DEBD920111ED1009BFBF7 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					C78538D71ED0C59F007D79AD = {
 						CreatedOnToolsVersion = 8.3.2;
 						LastSwiftMigration = 0920;
@@ -211,11 +391,35 @@
 			targets = (
 				C78538D71ED0C59F007D79AD /* SION */,
 				C78538E01ED0C59F007D79AD /* SIONTests */,
+				C70DEBBF20111D8C009BFBF7 /* SION iOS */,
+				C70DEBCC20111EA6009BFBF7 /* SION tvOS */,
+				C70DEBD920111ED1009BFBF7 /* SION watchOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C70DEBBE20111D8C009BFBF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBCB20111EA6009BFBF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBD820111ED1009BFBF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C78538D61ED0C59F007D79AD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -234,6 +438,51 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C70DEBBB20111D8C009BFBF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C70DEBE320111EEC009BFBF7 /* SION+Stringify.swift in Sources */,
+				C70DEBE920111EEC009BFBF7 /* OrderedKey.swift in Sources */,
+				C70DEBE820111EEC009BFBF7 /* SION+Initialization.swift in Sources */,
+				C70DEBE720111EEC009BFBF7 /* SION+Accessors.swift in Sources */,
+				C70DEBE620111EEC009BFBF7 /* SION+Error.swift in Sources */,
+				C70DEBE220111EEC009BFBF7 /* SION.swift in Sources */,
+				C70DEBE420111EEC009BFBF7 /* Parser.swift in Sources */,
+				C70DEBE520111EEC009BFBF7 /* SION+Comparison.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBC820111EA6009BFBF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C70DEBEB20111EEC009BFBF7 /* SION+Stringify.swift in Sources */,
+				C70DEBF120111EEC009BFBF7 /* OrderedKey.swift in Sources */,
+				C70DEBF020111EEC009BFBF7 /* SION+Initialization.swift in Sources */,
+				C70DEBEF20111EEC009BFBF7 /* SION+Accessors.swift in Sources */,
+				C70DEBEE20111EEC009BFBF7 /* SION+Error.swift in Sources */,
+				C70DEBEA20111EEC009BFBF7 /* SION.swift in Sources */,
+				C70DEBEC20111EEC009BFBF7 /* Parser.swift in Sources */,
+				C70DEBED20111EEC009BFBF7 /* SION+Comparison.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70DEBD520111ED1009BFBF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C70DEBF320111EED009BFBF7 /* SION+Stringify.swift in Sources */,
+				C70DEBF920111EED009BFBF7 /* OrderedKey.swift in Sources */,
+				C70DEBF820111EED009BFBF7 /* SION+Initialization.swift in Sources */,
+				C70DEBF720111EED009BFBF7 /* SION+Accessors.swift in Sources */,
+				C70DEBF620111EED009BFBF7 /* SION+Error.swift in Sources */,
+				C70DEBF220111EED009BFBF7 /* SION.swift in Sources */,
+				C70DEBF420111EED009BFBF7 /* Parser.swift in Sources */,
+				C70DEBF520111EED009BFBF7 /* SION+Comparison.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C78538D31ED0C59F007D79AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,6 +521,161 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		C70DEBC620111D8C009BFBF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SION iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C70DEBC720111D8C009BFBF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SION iOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C70DEBD320111EA6009BFBF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SION tvOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.2;
+			};
+			name = Debug;
+		};
+		C70DEBD420111EA6009BFBF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SION tvOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C70DEBE020111ED1009BFBF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SION watchOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 4.2;
+			};
+			name = Debug;
+		};
+		C70DEBE120111ED1009BFBF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SION watchOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 4.2;
+			};
+			name = Release;
+		};
 		C78538EA1ED0C59F007D79AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -399,6 +803,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -422,6 +827,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -436,6 +842,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SIONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchsimulator appletvsimulator appletvos watchos macosx";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -450,6 +857,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SIONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos watchsimulator appletvsimulator appletvos watchos macosx";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
@@ -458,6 +866,33 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C70DEBC520111D8C009BFBF7 /* Build configuration list for PBXNativeTarget "SION iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C70DEBC620111D8C009BFBF7 /* Debug */,
+				C70DEBC720111D8C009BFBF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C70DEBD220111EA6009BFBF7 /* Build configuration list for PBXNativeTarget "SION tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C70DEBD320111EA6009BFBF7 /* Debug */,
+				C70DEBD420111EA6009BFBF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C70DEBDF20111ED1009BFBF7 /* Build configuration list for PBXNativeTarget "SION watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C70DEBE020111ED1009BFBF7 /* Debug */,
+				C70DEBE120111ED1009BFBF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C78538D21ED0C59F007D79AD /* Build configuration list for PBXProject "SION" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
