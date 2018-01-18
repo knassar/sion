@@ -31,7 +31,7 @@ public struct SION {
     var type = ValueType.undefined
     public internal(set) var rawString: String? = nil
 
-    init() {}
+    public init() {}
 
     enum ValueType {
         case array
