@@ -63,13 +63,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C70DEBC020111D8C009BFBF7 /* SION_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70DEBC020111D8C009BFBF7 /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70DEBC220111D8C009BFBF7 /* SION_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_iOS.h; sourceTree = "<group>"; };
 		C70DEBC320111D8C009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C70DEBCD20111EA6009BFBF7 /* SION_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70DEBCD20111EA6009BFBF7 /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70DEBCF20111EA6009BFBF7 /* SION_tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_tvOS.h; sourceTree = "<group>"; };
 		C70DEBD020111EA6009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C70DEBDA20111ED1009BFBF7 /* SION_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70DEBDA20111ED1009BFBF7 /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70DEBDC20111ED1009BFBF7 /* SION_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_watchOS.h; sourceTree = "<group>"; };
 		C70DEBDD20111ED1009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C782614F200BFDE90004A958 /* OrderedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedKey.swift; sourceTree = "<group>"; };
@@ -177,9 +177,9 @@
 			children = (
 				C78538D81ED0C59F007D79AD /* SION.framework */,
 				C78538E11ED0C59F007D79AD /* SIONTests.xctest */,
-				C70DEBC020111D8C009BFBF7 /* SION_iOS.framework */,
-				C70DEBCD20111EA6009BFBF7 /* SION_tvOS.framework */,
-				C70DEBDA20111ED1009BFBF7 /* SION_watchOS.framework */,
+				C70DEBC020111D8C009BFBF7 /* SION.framework */,
+				C70DEBCD20111EA6009BFBF7 /* SION.framework */,
+				C70DEBDA20111ED1009BFBF7 /* SION.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -268,7 +268,7 @@
 			);
 			name = "SION iOS";
 			productName = "SION iOS";
-			productReference = C70DEBC020111D8C009BFBF7 /* SION_iOS.framework */;
+			productReference = C70DEBC020111D8C009BFBF7 /* SION.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C70DEBCC20111EA6009BFBF7 /* SION tvOS */ = {
@@ -286,7 +286,7 @@
 			);
 			name = "SION tvOS";
 			productName = "SION tvOS";
-			productReference = C70DEBCD20111EA6009BFBF7 /* SION_tvOS.framework */;
+			productReference = C70DEBCD20111EA6009BFBF7 /* SION.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C70DEBD920111ED1009BFBF7 /* SION watchOS */ = {
@@ -304,7 +304,7 @@
 			);
 			name = "SION watchOS";
 			productName = "SION watchOS";
-			productReference = C70DEBDA20111ED1009BFBF7 /* SION_watchOS.framework */;
+			productReference = C70DEBDA20111ED1009BFBF7 /* SION.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C78538D71ED0C59F007D79AD /* SION */ = {
@@ -537,8 +537,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
+				PRODUCT_NAME = SION;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -562,8 +562,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
+				PRODUCT_NAME = SION;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -587,8 +587,8 @@
 				INFOPLIST_FILE = "SION tvOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
+				PRODUCT_NAME = SION;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -612,8 +612,8 @@
 				INFOPLIST_FILE = "SION tvOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
+				PRODUCT_NAME = SION;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -639,8 +639,8 @@
 				INFOPLIST_FILE = "SION watchOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-watchOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
+				PRODUCT_NAME = SION;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -665,8 +665,8 @@
 				INFOPLIST_FILE = "SION watchOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hungrymelon.SION-watchOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hungrymelon.SION;
+				PRODUCT_NAME = SION;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;

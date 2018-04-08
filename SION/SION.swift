@@ -20,11 +20,6 @@
 
 import Foundation
 
-/** Represents a key in either a SION dictionary or array */
-public protocol SIONKey {}
-extension String: SIONKey {}
-extension Int: SIONKey {}
-
 public struct SION {
 
     var value: Any? = nil
