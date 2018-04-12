@@ -29,7 +29,9 @@ class SION_StringifyTests: XCTestCase {
                'foo': 'bar',
                 biff: "bast",
                 date: 2017-04-01, /* Foo Bar */
+                noKeys: {},
                 array: ["foo", 'bar', true, false, null],
+                empty: [ ],
                 dub: -23.56,
                 "and then": "foo'bar",
                 "and plus": 'foo"bar' }
@@ -37,7 +39,7 @@ class SION_StringifyTests: XCTestCase {
         let sion = try! SION(raw: rawString)
 
         let jsonSorted = """
-            {"and plus":"foo\\"bar","and then":"foo'bar","array":["foo","bar",true,false,null],"biff":"bast","date":"2017-04-01 00:00:00","dub":-23.56,"foo":"bar"}
+            {"and plus":"foo\\"bar","and then":"foo'bar","array":["foo","bar",true,false,null],"biff":"bast","date":"2017-04-01 00:00:00","dub":-23.56,"empty":[],"foo":"bar","noKeys":{}}
             """
         XCTAssertEqual(sion.stringify(options: [.json, .sortKeys]), jsonSorted)
 
@@ -55,7 +57,11 @@ class SION_StringifyTests: XCTestCase {
                 biff: "bast",
                 date: 2017-04-01 00:00:00,
                 dub: -23.56,
+                empty: [
+                ],
                 foo: "bar",
+                noKeys: {
+                },
             }
             """
         XCTAssertEqual(sion.stringify(options: [.pretty, .sortKeys]), prettySorted)
@@ -65,12 +71,16 @@ class SION_StringifyTests: XCTestCase {
                 foo: "bar",
                 biff: "bast",
                 date: 2017-04-01 00:00:00,
+                noKeys: {
+                },
                 array: [
                     "foo",
                     "bar",
                     true,
                     false,
                     null,
+                ],
+                empty: [
                 ],
                 dub: -23.56,
                 "and then": "foo'bar",
@@ -93,7 +103,11 @@ class SION_StringifyTests: XCTestCase {
                 biff: "bast",
                 date: 2017-04-01 00:00:00,
                 dub: -23.56,
-                foo: "bar"
+                empty: [
+                ],
+                foo: "bar",
+                noKeys: {
+                }
             }
             """
         XCTAssertEqual(sion.stringify(options: [.pretty, .noTrailingComma, .sortKeys]), prettySortedNoTrailing)
