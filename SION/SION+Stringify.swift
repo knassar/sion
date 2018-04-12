@@ -83,26 +83,32 @@ extension SION {
         let terminator: String
         let bracePad: String
         let braceTerminator: String
-        let trailingComma: String
+        let trailingComma = self.trailingComma(with: options)
         if options.contains(.pretty) {
             bracePad = Pretty.indent(depth)
             lPad = Pretty.indent(depth + 1)
             terminator = ",\n"
             braceTerminator = "\n"
-            if options.contains(.noTrailingComma) || options.contains(.json) {
-                trailingComma = "\n"
-            } else {
-                trailingComma = terminator
-            }
         } else {
             lPad = ""
             bracePad = ""
             terminator = ","
             braceTerminator = ""
-            trailingComma = ""
         }
         let values = arrayValue.map { lPad + $0.stringify(options, at: depth + 1) } .joined(separator: terminator)
         return "[\(braceTerminator)\(values)\(trailingComma)\(bracePad)]"
+    }
+
+    func trailingComma(with options: StringifyOptions) -> String {
+        if !isEmpty && options.contains(.pretty) {
+            if options.contains(.noTrailingComma) || options.contains(.json) {
+                return "\n"
+            } else {
+                return ",\n"
+            }
+        } else {
+            return ""
+        }
     }
 
     func stringifyBool(_ options: StringifyOptions) -> String {
@@ -120,25 +126,19 @@ extension SION {
         let kvTerminator: String
         let bracePad: String
         let braceTerminator: String
-        let trailingComma: String
+        let trailingComma = self.trailingComma(with: options)
         if options.contains(.pretty) {
             kvSeparator = ": "
             bracePad = Pretty.indent(depth)
             lPad = Pretty.indent(depth + 1)
             kvTerminator = ",\n"
             braceTerminator = "\n"
-            if options.contains(.noTrailingComma) || options.contains(.json) {
-                trailingComma = "\n"
-            } else {
-                trailingComma = kvTerminator
-            }
         } else {
             kvSeparator = ":"
             lPad = ""
             bracePad = ""
             kvTerminator = ","
             braceTerminator = ""
-            trailingComma = ""
         }
         var keys: [String]
         if let orderedDictionary = value as? [OrderedKey: SION], !options.contains(.sortKeys) {
