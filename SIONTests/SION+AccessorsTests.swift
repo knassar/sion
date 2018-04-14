@@ -19,6 +19,7 @@
 //
 
 import XCTest
+import CoreGraphics
 @testable import SION
 
 class SION_AccessorsTests: XCTestCase {
