@@ -1,0 +1,10 @@
+diff a/SIONTests/SION+AccessorsTests.swift b/SIONTests/SION+AccessorsTests.swift	(rejected hunks)
+@@ -36,6 +37,8 @@ class SION_AccessorsTests: XCTestCase {
+ 
+         XCTAssertEqual(sion["foo"].string, "bar")
+         XCTAssertEqual(sion["num"].number, 123.4)
++        XCTAssertEqual(sion["num"].float, 123.4)
++        XCTAssertEqual(sion["num"].cgFloat, 123.4)
+         XCTAssertTrue(sion["tru"].boolValue)
+         XCTAssertEqual(sion["arr"][1].int, 2)
+         XCTAssertEqual(sion["dict"]["bar"].string, "foo")

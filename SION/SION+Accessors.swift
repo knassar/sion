@@ -174,17 +174,6 @@ extension SION {
         return float ?? 0
     }
 
-    /// The value as a CGFloat, or nil
-    public var cgFloat: CGFloat? {
-        guard let double = number else { return nil }
-        return CGFloat(double)
-    }
-
-    /// The value as a CGFloat, or 0.0
-    public var cgFloatValue: CGFloat {
-        return cgFloat ?? 0
-    }
-
     /// The value as a date, or nil
     public var date: Date? {
         guard isDate else { return nil }

@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C70DEBC420111D8C009BFBF7 /* SION_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C70DEBC220111D8C009BFBF7 /* SION_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C70DEBD120111EA6009BFBF7 /* SION_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C70DEBCF20111EA6009BFBF7 /* SION_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C70DEBDE20111ED1009BFBF7 /* SION_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = C70DEBDC20111ED1009BFBF7 /* SION_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C70DEBE220111EEC009BFBF7 /* SION.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F21ED0C5BF007D79AD /* SION.swift */; };
 		C70DEBE320111EEC009BFBF7 /* SION+Stringify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CED6031EDF9D520041B879 /* SION+Stringify.swift */; };
 		C70DEBE420111EEC009BFBF7 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538F41ED0C60E007D79AD /* Parser.swift */; };
@@ -34,6 +31,18 @@
 		C70DEBF720111EED009BFBF7 /* SION+Accessors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */; };
 		C70DEBF820111EED009BFBF7 /* SION+Initialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */; };
 		C70DEBF920111EED009BFBF7 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
+		C729B1BA20825D6B00028EA3 /* SION+CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C729B1B920825D6B00028EA3 /* SION+CGFloat.swift */; };
+		C729B1BB20825E0300028EA3 /* SION+CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C729B1B920825D6B00028EA3 /* SION+CGFloat.swift */; };
+		C729B1BC20825E0300028EA3 /* SION+CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C729B1B920825D6B00028EA3 /* SION+CGFloat.swift */; };
+		C729B1BD20825E0400028EA3 /* SION+CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = C729B1B920825D6B00028EA3 /* SION+CGFloat.swift */; };
+		C729B1BE20825E2C00028EA3 /* SION.h in Headers */ = {isa = PBXBuildFile; fileRef = C78538DB1ED0C59F007D79AD /* SION.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C729B1BF20825E2D00028EA3 /* SION.h in Headers */ = {isa = PBXBuildFile; fileRef = C78538DB1ED0C59F007D79AD /* SION.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C729B1C020825E2D00028EA3 /* SION.h in Headers */ = {isa = PBXBuildFile; fileRef = C78538DB1ED0C59F007D79AD /* SION.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C729B1CA20825F6A00028EA3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C729B1C920825F6A00028EA3 /* CoreGraphics.framework */; };
+		C729B1CC20825F7300028EA3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C729B1CB20825F7300028EA3 /* CoreGraphics.framework */; };
+		C729B1CE20825F7900028EA3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C729B1CD20825F7900028EA3 /* CoreGraphics.framework */; };
+		C729B1D020825F8000028EA3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C729B1CF20825F8000028EA3 /* CoreGraphics.framework */; };
+		C729B1D72082603A00028EA3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C729B1C920825F6A00028EA3 /* CoreGraphics.framework */; };
 		C7826150200BFDE90004A958 /* OrderedKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C782614F200BFDE90004A958 /* OrderedKey.swift */; };
 		C78538E21ED0C59F007D79AD /* SION.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78538D81ED0C59F007D79AD /* SION.framework */; };
 		C78538E71ED0C59F007D79AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78538E61ED0C59F007D79AD /* ParserTests.swift */; };
@@ -72,6 +81,11 @@
 		C70DEBDA20111ED1009BFBF7 /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70DEBDC20111ED1009BFBF7 /* SION_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION_watchOS.h; sourceTree = "<group>"; };
 		C70DEBDD20111ED1009BFBF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C729B1B920825D6B00028EA3 /* SION+CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SION+CGFloat.swift"; sourceTree = "<group>"; };
+		C729B1C920825F6A00028EA3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C729B1CB20825F7300028EA3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		C729B1CD20825F7900028EA3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		C729B1CF20825F8000028EA3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS4.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		C782614F200BFDE90004A958 /* OrderedKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedKey.swift; sourceTree = "<group>"; };
 		C78538D81ED0C59F007D79AD /* SION.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SION.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78538DB1ED0C59F007D79AD /* SION.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SION.h; sourceTree = "<group>"; };
@@ -98,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1CC20825F7300028EA3 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1CE20825F7900028EA3 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1D020825F8000028EA3 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1CA20825F6A00028EA3 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1D72082603A00028EA3 /* CoreGraphics.framework in Frameworks */,
 				C78538E21ED0C59F007D79AD /* SION.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +179,17 @@
 			path = "SION watchOS";
 			sourceTree = "<group>";
 		};
+		C729B1C820825F6A00028EA3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C729B1CF20825F8000028EA3 /* CoreGraphics.framework */,
+				C729B1CD20825F7900028EA3 /* CoreGraphics.framework */,
+				C729B1CB20825F7300028EA3 /* CoreGraphics.framework */,
+				C729B1C920825F6A00028EA3 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C78538CE1ED0C59F007D79AD = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +199,7 @@
 				C70DEBCE20111EA6009BFBF7 /* SION tvOS */,
 				C70DEBDB20111ED1009BFBF7 /* SION watchOS */,
 				C78538D91ED0C59F007D79AD /* Products */,
+				C729B1C820825F6A00028EA3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -197,6 +228,7 @@
 				C7AD6AB9200BB471001DE68E /* SION+Accessors.swift */,
 				C7AD6ABB200BB48E001DE68E /* SION+Initialization.swift */,
 				C782614F200BFDE90004A958 /* OrderedKey.swift */,
+				C729B1B920825D6B00028EA3 /* SION+CGFloat.swift */,
 			);
 			path = SION;
 			sourceTree = "<group>";
@@ -222,7 +254,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C70DEBC420111D8C009BFBF7 /* SION_iOS.h in Headers */,
+				C729B1BE20825E2C00028EA3 /* SION.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,7 +262,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C70DEBD120111EA6009BFBF7 /* SION_tvOS.h in Headers */,
+				C729B1BF20825E2D00028EA3 /* SION.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +270,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C70DEBDE20111ED1009BFBF7 /* SION_watchOS.h in Headers */,
+				C729B1C020825E2D00028EA3 /* SION.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1BB20825E0300028EA3 /* SION+CGFloat.swift in Sources */,
 				C70DEBE320111EEC009BFBF7 /* SION+Stringify.swift in Sources */,
 				C70DEBE920111EEC009BFBF7 /* OrderedKey.swift in Sources */,
 				C70DEBE820111EEC009BFBF7 /* SION+Initialization.swift in Sources */,
@@ -457,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1BC20825E0300028EA3 /* SION+CGFloat.swift in Sources */,
 				C70DEBEB20111EEC009BFBF7 /* SION+Stringify.swift in Sources */,
 				C70DEBF120111EEC009BFBF7 /* OrderedKey.swift in Sources */,
 				C70DEBF020111EEC009BFBF7 /* SION+Initialization.swift in Sources */,
@@ -472,6 +506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1BD20825E0400028EA3 /* SION+CGFloat.swift in Sources */,
 				C70DEBF320111EED009BFBF7 /* SION+Stringify.swift in Sources */,
 				C70DEBF920111EED009BFBF7 /* OrderedKey.swift in Sources */,
 				C70DEBF820111EED009BFBF7 /* SION+Initialization.swift in Sources */,
@@ -487,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C729B1BA20825D6B00028EA3 /* SION+CGFloat.swift in Sources */,
 				C78538F51ED0C60E007D79AD /* Parser.swift in Sources */,
 				C7826150200BFDE90004A958 /* OrderedKey.swift in Sources */,
 				C7AD6ABC200BB48E001DE68E /* SION+Initialization.swift in Sources */,
@@ -793,7 +829,6 @@
 		C78538ED1ED0C59F007D79AD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -817,7 +852,6 @@
 		C78538EE1ED0C59F007D79AD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
