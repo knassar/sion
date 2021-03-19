@@ -31,37 +31,39 @@ class SIONPrinter: Printer {
         self.options = options
     }
 
-    func print(_ node: ASTWrappableNode) -> String {
+    func print(_ node: SION) -> String {
         let content: [String] =
-                node.commentsBefore.map { self.printComment($0) } +
+                node.headComments.map { self.printComment($0) } +
                 [printNode(node)] +
-                node.commentsAfter.map { self.printComment($0) }
+                node.tailComments.map { self.printComment($0) }
 
         return content.joined(separator: "\n")
     }
 
-    private func printNode(_ node: ASTWrappableNode) -> String {
+    private func printNode(_ node: SION) -> String {
         switch node.value {
-        case let .unkeyedContainer(unkeyed):
+        case let unkeyed as UnkeyedContainer:
             return printUnkeyedContainer(unkeyed)
-        case let .keyedContainer(keyed):
+        case let keyed as KeyedContainer:
             return printKeyedContainer(keyed)
-        case let .bool(bool):
+        case let bool as Bool:
             return print(bool)
-        case let .date(date):
+        case let date as Date:
             return print(date)
-        case .null:
+        case is Null:
             return printNull()
-        case let .number(number):
-            return print(number)
-        case let .string(string):
+        case let string as String:
             return print(string)
-        case .undefined:
-            return ""
+        default:
+            if node.isNumber {
+                return print(node.doubleValue)
+            } else {
+                return ""
+            }
         }
     }
 
-    func printUnkeyedContainer(_ unkeyed: AST.UnkeyedContainer) -> String {
+    func printUnkeyedContainer(_ unkeyed: UnkeyedContainer) -> String {
         let lEnd = lineEnd()
 
         var values = [String]()
@@ -74,7 +76,7 @@ class SIONPrinter: Printer {
         return ["[", values.joined(separator: lEnd), indent() + "]"].joined(separator: lEnd)
     }
 
-    func printValue(_ node: AST.Value, last: Bool, isStandAloneLine: Bool) -> String {
+    func printValue(_ node: SION, last: Bool, isStandAloneLine: Bool) -> String {
         let lEnd = lineEnd()
         let spc = space()
         let lPad = isStandAloneLine ? indent() : ""
@@ -83,8 +85,8 @@ class SIONPrinter: Printer {
         let valueString = printNode(node) + separator
 
         if options.includeComments {
-            let before = node.commentsBefore.map { printComment($0) }
-            let after = node.commentsAfter.map { printComment($0) }
+            let before = node.headComments.map { printComment($0) }
+            let after = node.tailComments.map { printComment($0) }
             let valueAndTrailingComment = valueString + spc + after.joined(separator: spc)
             return (before + [valueAndTrailingComment]).map {
                 lPad + trimTrailingSpaces($0)
@@ -94,7 +96,7 @@ class SIONPrinter: Printer {
         }
     }
 
-    func printKeyedContainer(_ keyed: AST.KeyedContainer) -> String {
+    func printKeyedContainer(_ keyed: KeyedContainer) -> String {
         let lEnd = lineEnd()
 
         depth += 1
@@ -105,13 +107,13 @@ class SIONPrinter: Printer {
         return ["{", lines, indent() + "}"].joined(separator: lEnd)
     }
 
-    func printEntryForKeyValuePair(_ keypair: AST.KeyValuePair, last: Bool) -> String {
+    func printEntryForKeyValuePair(_ keypair: KeyValuePair, last: Bool) -> String {
         let spc = space()
 
         return printKey(keypair.key) + ":" + spc + printValue(keypair.value, last: last, isStandAloneLine: false)
     }
 
-    func printKey(_ key: AST.Key) -> String {
+    func printKey(_ key: Key) -> String {
         let lPad = indent()
         let lEnd = lineEnd()
         let spc = space()
@@ -128,8 +130,8 @@ class SIONPrinter: Printer {
         }
 
         if options.includeComments {
-            let before = key.commentsBefore.map { printComment($0) }
-            let after = key.commentsAfter.map { printComment($0) }
+            let before = key.headComments.map { printComment($0) }
+            let after = key.tailComments.map { printComment($0) }
             return (before + [printedKey + spc] + after).map { lPad + trimTrailingSpaces($0) }.joined(separator: lEnd)
         } else {
             return lPad + printedKey
@@ -150,7 +152,7 @@ class SIONPrinter: Printer {
 //        }
 //    }
 
-    func printComment(_ comment: AST.Comment) -> String {
+    func printComment(_ comment: Comment) -> String {
         guard options.includeComments else { return "" }
         switch comment {
         case let .inline(text):

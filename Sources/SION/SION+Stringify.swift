@@ -63,9 +63,9 @@ extension SION {
     */
     public func stringify(options: StringifyOptions = []) -> String {
         if options.contains(.json) {
-            return JSONPrinter(options: options).print(node)
+            return JSONPrinter(options: options).print(self)
         } else {
-            return SIONPrinter(options: options).print(node)
+            return SIONPrinter(options: options).print(self)
         }
     }
 

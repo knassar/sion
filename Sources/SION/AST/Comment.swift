@@ -1,16 +1,16 @@
 //
-//  SION+DebugStringConvertible.swift
+//  Comment.swift
 //  SION
 //
-//  Created by Karim Nassar on 1/20/19.
-//  Copyright © 2019 HungryMelonStudios LLC. All rights reserved.
+//  Created by Karim Nassar on 3/18/21.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//  
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,10 +20,18 @@
 
 import Foundation
 
-extension SION: CustomDebugStringConvertible {
+enum Comment: ASTNode, Hashable {
+    case block(String)
+    case inline(String)
 
-    public var debugDescription: String {
-        node.debugDescription
+    var debugDescription: String {
+        switch self {
+        case let .block(text):
+            return "<SION:BlockComment: '\(text)'>"
+        case let .inline(text):
+            return "<SION:InlineComment: '\(text)'>"
+        }
+
     }
 
 }

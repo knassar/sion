@@ -184,26 +184,26 @@ private enum Token: Character {
 extension ASTParser {
 
     private func parseDocument() throws -> ASTContainer {
-        let commentsBefore = parseBeforeComments()
+        let headComments = parseBeforeComments()
 
         switch try parseValueType() {
-        case var .keyedContainer(keyed):
-            keyed.commentsBefore = commentsBefore
+        case var keyed as KeyedContainer:
+            keyed.headComments = headComments
             chompWhitespace()
-            keyed.commentsAfter = parseAfterComments()
+            keyed.tailComments = parseAfterComments()
             return keyed
-        case var .unkeyedContainer(unkeyed):
-            unkeyed.commentsBefore = commentsBefore
+        case var unkeyed as UnkeyedContainer:
+            unkeyed.headComments = headComments
             chompWhitespace()
-            unkeyed.commentsAfter = parseAfterComments()
+            unkeyed.tailComments = parseAfterComments()
             return unkeyed
         default:
             throw Error.nonDocumentRoot(in: raw)
         }
     }
 
-    private func parseKeyedContainer() throws -> AST.KeyedContainer {
-        let commentsBefore = parseBeforeComments()
+    private func parseKeyedContainer() throws -> KeyedContainer {
+        let headComments = parseBeforeComments()
         chompWhitespace()
         guard thisToken == .dictOpen else {
             let index = self.index
@@ -211,18 +211,18 @@ extension ASTParser {
         }
         advance()
         chompWhitespace()
-        var kvPairs = [AST.KeyValuePair]()
+        var kvPairs = [KeyValuePair]()
         while thisToken != .dictClose {
             try kvPairs.append(parseKeyValuePair())
         }
         advance()
-        let commentsAfter = parseAfterComments()
+        let tailComments = parseAfterComments()
 
-        return AST.KeyedContainer(keyValuePairs: kvPairs, commentsBefore: commentsBefore, commentsAfter: commentsAfter)
+        return KeyedContainer(keyValuePairs: kvPairs, headComments: headComments, tailComments: tailComments)
     }
 
-    private func parseUnkeyedContainer() throws -> AST.UnkeyedContainer {
-        let commentsBefore = parseBeforeComments()
+    private func parseUnkeyedContainer() throws -> UnkeyedContainer {
+        let headComments = parseBeforeComments()
         chompWhitespace()
         guard thisToken == .arrayOpen else {
             let index = self.index
@@ -230,21 +230,21 @@ extension ASTParser {
         }
         advance()
         chompWhitespace()
-        var values = [AST.Value]()
+        var values = [SION]()
         while thisToken != .arrayClose {
             try values.append(parseValue())
         }
         advance()
-        let commentsAfter = parseAfterComments()
+        let tailComments = parseAfterComments()
 
-        return AST.UnkeyedContainer(values: values, commentsBefore: commentsBefore, commentsAfter: commentsAfter)
+        return UnkeyedContainer(values: values, headComments: headComments, tailComments: tailComments)
     }
 
-    private func parseKeyValuePair() throws -> AST.KeyValuePair {
+    private func parseKeyValuePair() throws -> KeyValuePair {
         chompWhitespace()
         let key = try parseKey()
         let value = try parseValue()
-        return AST.KeyValuePair(key: key, value: value)
+        return KeyValuePair(key: key, value: value)
     }
 
 }
@@ -253,17 +253,17 @@ extension ASTParser {
 
 extension ASTParser {
 
-    private func parseKey() throws -> AST.Key {
-        let commentsBefore = parseBeforeComments()
+    private func parseKey() throws -> Key {
+        let headComments = parseBeforeComments()
         chompWhitespace()
         let name = try parseKeyName()
         chompWhitespace()
-        let commentsAfter = parseAfterComments()
+        let tailComments = parseAfterComments()
         if thisToken == .delimKey {
             advance()
             chompWhitespace()
         }
-        return AST.Key(name: name, commentsBefore: commentsBefore, commentsAfter: commentsAfter)
+        return Key(name: name, headComments: headComments, tailComments: tailComments)
     }
 
     private func parseKeyName() throws -> String {
@@ -314,32 +314,32 @@ extension ASTParser {
 
 extension ASTParser {
 
-    private func parseValue() throws -> AST.Value {
-        let commentsBefore = parseBeforeComments()
+    private func parseValue() throws -> SION {
+        let headComments = parseBeforeComments()
         chompWhitespace()
         let value = try parseValueType()
-        let commentsAfter = parseAfterComments()
+        let tailComments = parseAfterComments()
         chompWhitespace()
-        return AST.Value(value: value, commentsBefore: commentsBefore, commentsAfter: commentsAfter)
+        return SION(value: value, headComments: headComments, tailComments: tailComments)
     }
 
-    private func parseValueType() throws -> AST.Value.ValueType {
+    private func parseValueType() throws -> ASTValue {
         defer {
             chompValueDelim()
         }
         chompWhitespace()
-        guard let char = thisChar else { return .undefined }
+        guard let char = thisChar else { return Undefined() }
         switch Token(rawValue: char) {
         case .dictOpen:
-            return try .keyedContainer(parseKeyedContainer())
+            return try parseKeyedContainer()
         case .arrayOpen:
-            return try .unkeyedContainer(parseUnkeyedContainer())
+            return try parseUnkeyedContainer()
         case .quoteSingle:
-            return try .string(parseString(.quoteSingle))
+            return try parseString(.quoteSingle)
         case .quoteDouble:
-            return try .string(parseString(.quoteDouble))
+            return try parseString(.quoteDouble)
         case .delimVal:
-            return .undefined
+            return Undefined()
         default:
             if let char = thisChar, Token.literals.hasMember(char) {
                 return try parseValueLiteral()
@@ -365,25 +365,27 @@ extension ASTParser {
         return value
     }
 
-    private func parseValueLiteral() throws -> AST.Value.ValueType {
+    private func parseValueLiteral() throws -> ASTValue {
         guard let char = thisChar else { throw Error.invalidValue(at: index, in: raw) }
         switch char {
         case "F" where chompIf(matching: "false"),
              "f" where chompIf(matching: "false"):
-            return .bool(false)
+            return false
         case "T" where chompIf(matching: "true"),
              "t" where chompIf(matching: "true"):
-            return .bool(true)
+            return true
         case "N" where chompIf(matching: "null"),
              "n" where chompIf(matching: "null"):
-            return .null
+            return Null()
         default:
             if Token.numerics.hasMember(char) {
                 let value = accumulateWhile { !Token.valueTerminators.hasMember($0) } .trimmingCharacters(in: Token.whitespacesAndNewlines)
-                if let double = Double(value) {
-                    return .number(double)
+                if let int = Int(value) {
+                    return Numeric.int(int)
+                } else if let double = Double(value) {
+                    return Numeric.double(double)
                 } else if let date = parseDate(value) {
-                    return .date(date)
+                    return date
                 }
             }
         }
@@ -421,23 +423,23 @@ extension ASTParser {
 
 extension ASTParser {
 
-    private func parseBeforeComments() -> [AST.Comment] {
+    private func parseBeforeComments() -> [Comment] {
         chompWhitespace()
-        var comments = [AST.Comment]()
+        var comments = [Comment]()
 
         while !atEnd, let token1 = thisToken, let nextChar = nextChar, let token2 = Token(rawValue: nextChar) {
 
             switch (token1, token2) {
             case (.fwdSlash, .fwdSlash):
                 advance(2)
-                let comment = AST.Comment.inline(accumulateWhile({ char in
+                let comment = Comment.inline(accumulateWhile({ char in
                     !CharacterSet.newlines.hasMember(char)
                 }))
                 comments.append(comment)
                 advance()
             case (.fwdSlash, .star):
                 advance(2)
-                let comment = AST.Comment.block(accumulateWhile({ _ in
+                let comment = Comment.block(accumulateWhile({ _ in
                     peek(2) != "*/"
                 }))
                 comments.append(comment)
@@ -451,15 +453,15 @@ extension ASTParser {
         return comments
     }
 
-    private func parseAfterComments() -> [AST.Comment] {
-        var comments = [AST.Comment]()
+    private func parseAfterComments() -> [Comment] {
+        var comments = [Comment]()
         chompNonNewlineWhitespace()
         while !atEnd, let token1 = thisToken, let nextChar = nextChar, let token2 = Token(rawValue: nextChar) {
 
             switch (token1, token2) {
             case (.fwdSlash, .fwdSlash):
                 advance(2)
-                let comment = AST.Comment.inline(accumulateWhile({ char in
+                let comment = Comment.inline(accumulateWhile({ char in
                     !CharacterSet.newlines.hasMember(char)
                 }))
                 comments.append(comment)
@@ -467,7 +469,7 @@ extension ASTParser {
                 return comments
             case (.fwdSlash, .star):
                 advance(2)
-                let comment = AST.Comment.block(accumulateWhile({ _ in
+                let comment = Comment.block(accumulateWhile({ _ in
                     peek(2) != "*/"
                 }))
                 comments.append(comment)

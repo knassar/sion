@@ -25,7 +25,7 @@ protocol Printer {
     var options: StringifyOptions { get }
     var depth: Int { get }
 
-    func print(_ sion: ASTWrappableNode) throws -> String
+    func print(_ sion: SION) throws -> String
 
     init(options: StringifyOptions)
 }

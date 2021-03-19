@@ -42,8 +42,8 @@ I also may wind up adding more literal value types to SION as features like cond
 ## Initialize from a file
 
 ```
-    let sionFromString = try? SION(raw: sionStringLoadedFromFile)
-    let sionFromData = try? SION(raw: sionDataLoadedFromFile)
+    let sionFromString = try? SION(parsing: sionStringLoadedFromFile)
+    let sionFromData = try? SION(parsing: sionDataLoadedFromFile)
 ```
 
 ## Initialize from literals

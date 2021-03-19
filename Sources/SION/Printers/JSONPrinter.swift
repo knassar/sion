@@ -31,28 +31,30 @@ class JSONPrinter: Printer {
         self.options = options
     }
 
-    func print(_ node: ASTWrappableNode) -> String {
+    func print(_ node: SION) -> String {
         switch node.value {
-        case let .unkeyedContainer(unkeyed):
+        case let unkeyed as UnkeyedContainer:
             return printUnkeyedContainer(unkeyed)
-        case let .keyedContainer(keyed):
+        case let keyed as KeyedContainer:
             return printKeyedContainer(keyed)
-        case let .bool(bool):
+        case let bool as Bool:
             return print(bool)
-        case let .date(date):
+        case let date as Date:
             return print(date)
-        case .null:
+        case is Null:
             return printNull()
-        case let .number(number):
-            return print(number)
-        case let .string(string):
+        case let string as String:
             return print(string)
-        case .undefined:
-            return ""
+        default:
+            if node.isNumber {
+                return print(node.doubleValue)
+            } else {
+                return ""
+            }
         }
     }
 
-    func printUnkeyedContainer(_ unkeyed: AST.UnkeyedContainer) -> String {
+    func printUnkeyedContainer(_ unkeyed: UnkeyedContainer) -> String {
         let lEnd = lineEnd()
 
         depth += 1
@@ -62,7 +64,7 @@ class JSONPrinter: Printer {
         return ["[", values, indent() + "]"].joined(separator: lEnd)
     }
 
-    func printKeyedContainer(_ keyed: AST.KeyedContainer) -> String {
+    func printKeyedContainer(_ keyed: KeyedContainer) -> String {
         let spc = space()
         let lEnd = lineEnd()
 
@@ -76,7 +78,7 @@ class JSONPrinter: Printer {
         return ["{", values, indent() + "}"].joined(separator: lEnd)
     }
 
-    func printKey(_ key: AST.Key) -> String {
+    func printKey(_ key: Key) -> String {
         return "\"\(escapeDoubleQuotes(key.name))\""
     }
 

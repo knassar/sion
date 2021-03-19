@@ -68,7 +68,7 @@ class SION_AccessorsTests: XCTestCase {
     }
 
     func test_getKeyPaths() {
-        let sion = try! SION(raw: "{foo: {bar: {biff: [{}, {boff: 'perfect'}]}}}")
+        let sion = try! SION(parsing: "{foo: {bar: {biff: [{}, {boff: 'perfect'}]}}}")
 
         XCTAssertEqual(sion.foo.bar.biff[1].boff.stringValue, "perfect")
 
@@ -77,24 +77,25 @@ class SION_AccessorsTests: XCTestCase {
     }
 
     func test_setKeyPaths() {
-        var sion = try! SION(raw: "{foo: {bar: {}}}")
+        var sion = try! SION(parsing: "{foo: {bar: {}}}")
 
-        sion.foo.bar.biff[1].boff = "perfect"
+        sion.foo.bar.biff.boff = SION(["perfect"])
         sion.blah = SION([123])
         sion.blah[2] = 321
-        XCTAssertTrue(sion.foo.bar.biff[0].boff.isUndefined)
-        XCTAssertEqual(sion.blah[0].intValue, 123)
+        XCTAssertFalse(sion.foo.bar.biff.boff[0].isNull)
+        XCTAssertTrue(sion.foo.bar.biff.boff[1].isUndefined)
+        XCTAssertEqual(sion.blah[0].int, 123)
         XCTAssertNil(sion.blah[1].int)
-        XCTAssertEqual(sion.blah[2].intValue, 321)
-        XCTAssertEqual(sion.foo.bar.biff[1].boff.stringValue, "perfect")
+        XCTAssertEqual(sion.blah[2].int, 321)
+        XCTAssertEqual(sion.foo.bar.biff.boff[0].string, "perfect")
 
-        sion.foo.bar.biff[0].boff = "frist!"
-        XCTAssertEqual(sion.foo.bar.biff[0].boff.stringValue, "frist!")
-        XCTAssertEqual(sion.foo.bar.biff[1].boff.stringValue, "perfect")
+        sion.foo.bar.biff.boff[1] = "frist!"
+        XCTAssertEqual(sion.foo.bar.biff.boff[0].string, "perfect")
+        XCTAssertEqual(sion.foo.bar.biff.boff[1].string, "frist!")
 
-        sion.foo.bar.biff[1].boff = "after"
-        XCTAssertEqual(sion.foo.bar.biff[0].boff.stringValue, "frist!")
-        XCTAssertEqual(sion.foo.bar.biff[1].boff.stringValue, "after")
+        sion.foo.bar.biff.boff[0] = "after"
+        XCTAssertEqual(sion.foo.bar.biff.boff[0].string, "after")
+        XCTAssertEqual(sion.foo.bar.biff.boff[1].string, "frist!")
     }
 
     func test_float() {

@@ -35,7 +35,7 @@ class SION_StringifyTests: XCTestCase {
                 "and plus": 'foo"bar',
             }
             """
-        let sion = try! SION(raw: rawString)
+        let sion = try! SION(parsing: rawString)
 
         let json = """
             {"foo":"bar","biff":"bast","date":"2017-04-01 00:00:00","array":["foo","bar",true,false,null],"dub":-23.56,"and then":"foo'bar","and plus":"foo\\\"bar"}
@@ -98,7 +98,7 @@ class SION_StringifyTests: XCTestCase {
                 "and plus": 'foo"bar'
             }
             """
-        let sion = try! SION(raw: rawString)
+        let sion = try! SION(parsing: rawString)
 
         let jsonSorted = """
             {"and plus":'foo"bar',"and then":"foo'bar",array:["foo","bar",true,false,null,],biff:"bast",date:2017-04-01 00:00:00,dub:-23.56,foo:"bar",}
@@ -170,8 +170,8 @@ class SION_StringifyTests: XCTestCase {
     }
 
     func test_printKey_JSON() {
-        func key(_ key: String) -> AST.Key {
-            AST.Key(name: key, commentsBefore: [], commentsAfter: [])
+        func key(_ key: String) -> Key {
+            Key(name: key, headComments: [], tailComments: [])
         }
 
         XCTAssertEqual(JSONPrinter(options: []).printKey(key("key")), "\"key\"")
@@ -186,9 +186,9 @@ class SION_StringifyTests: XCTestCase {
         XCTAssertEqual(JSONPrinter(options: []).printKey(key("k:'e\"y")), "\"k:'e\\\"y\"")
     }
 
-    func test_printKey_SION() {
-        func key(_ key: String) -> AST.Key {
-            AST.Key(name: key, commentsBefore: [], commentsAfter: [])
+    func test_printKeySION() {
+        func key(_ key: String) -> Key {
+            Key(name: key, headComments: [], tailComments: [])
         }
 
         XCTAssertEqual(SIONPrinter(options: []).printKey(key("key")), "key")
@@ -215,7 +215,7 @@ class SION_StringifyTests: XCTestCase {
                 self.options = options
             }
 
-            func print(_ node: ASTWrappableNode) throws -> String {
+            func print(_ node: SION) throws -> String {
                 return ""
             }
         }
@@ -226,13 +226,13 @@ class SION_StringifyTests: XCTestCase {
     }
 
     func test_stringifyRootComments() {
-        var sion = try! SION(raw: """
-            {
-               'foo': 'bar',
-                biff: "bast",
-            }
-            """)
-
+//        var sion = try! SION(parsing: """
+//            {
+//               'foo': 'bar',
+//                biff: "bast",
+//            }
+//            """)
+//
 //        sion.headComments = [
 //            try! Comment(value: "head block comment", address: .header, style: .block),
 //            try! Comment(value: "head line comment", address: .header, style: .line),
@@ -244,7 +244,7 @@ class SION_StringifyTests: XCTestCase {
 //            try! Comment(value: "tail line comment", address: .footer, style: .line),
 //            try! Comment(value: "tail inline-block comment", address: .footer, style: nil),
 //        ]
-
+//
 //        let expected = """
 //            /*
 //              head block comment
@@ -261,26 +261,25 @@ class SION_StringifyTests: XCTestCase {
 //            // tail line comment
 //            /* tail inline-block comment */
 //            """
-
+//
 //        XCTAssertEqual(try! sion.stringify(options: [.pretty]), expected)
-
     }
 
     func test_arrayComments() {
-
-        var sion = SION([
-                "one",
-                true,
-                "three",
-                "four",
-                5,
-            ])
-
+//
+//        var sion = SION([
+//                "one",
+//                true,
+//                "three",
+//                "four",
+//                5,
+//            ])
+//
 //        try! sion.insertLineComment("line comment", at: 1)
 //        try! sion.insertComment("inline block", before: 1)
 //        try! sion.insertComment("block comment", as: .block, before: 3)
 //        try! sion.insertComment("after block comment", as: .block, after: 3)
-
+//
 //        let expected = """
 //            [
 //                "one",
@@ -299,7 +298,7 @@ class SION_StringifyTests: XCTestCase {
 //            """
 //
 //        XCTAssertEqual(try! sion.stringify(options: [.pretty]), expected)
-
+//
     }
 
 }

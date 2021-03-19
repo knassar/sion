@@ -20,6 +20,58 @@
 
 import Foundation
 
+extension SION {
+
+    public init() {
+        self.value = Undefined()
+    }
+
+    /// an undefined SION value
+    public static let undefined = SION(value: Undefined())
+
+    /// a null SION value
+    public static let null = SION(value: Null())
+
+    init(value: ASTValue) {
+        self.value = value
+    }
+
+    /**
+     Initialze from a string representation as from a file
+
+     - throws:
+     `SION.Error` when parse fails
+
+     - parameters:
+        - raw: The string contents of the file or string literal
+
+     */
+    public init(parsing rawString: String) throws {
+        do {
+            self.value = try ASTParser.parse(rawString)
+        }
+        catch let parseError as ASTParser.Error {
+            throw Error.init(parseError: parseError)
+        }
+    }
+
+    /**
+     Initialze from `Data` representation as from a file
+
+     - throws:
+     `SION.Error` when decoding or parse fails
+
+     - parameters:
+         - data: The data contents of the file
+         - encoding: Expected `String.Encoding` to use to decode the `Data`
+     */
+    public init(data: Data, encoding: String.Encoding = .utf8) throws {
+        guard let str = String(data: data, encoding: encoding) else { throw Error.stringFromData }
+        try self.init(parsing: str)
+    }
+
+}
+
 extension SION: ExpressibleByStringLiteral, ExpressibleByExtendedGraphemeClusterLiteral, ExpressibleByUnicodeScalarLiteral {
 
     public typealias StringLiteralType = String
@@ -27,19 +79,19 @@ extension SION: ExpressibleByStringLiteral, ExpressibleByExtendedGraphemeCluster
     public typealias UnicodeScalarLiteralType = String
 
     public init(stringLiteral value: StringLiteralType) {
-        self.node = AST.Value(value: .string(value), commentsBefore: [], commentsAfter: [])
+        self.value = value
     }
 
     public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
-        self.node = AST.Value(value: .string(value), commentsBefore: [], commentsAfter: [])
+        self.value = value
     }
 
     public init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
-        self.node = AST.Value(value: .string(value), commentsBefore: [], commentsAfter: [])
+        self.value = value
     }
 
     public init(_ string: String) {
-        self.node = AST.Value(value: .string(string), commentsBefore: [], commentsAfter: [])
+        self.value = string
     }
 
 }
@@ -48,23 +100,27 @@ extension SION: ExpressibleByStringLiteral, ExpressibleByExtendedGraphemeCluster
 extension SION: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 
     public init(floatLiteral value: FloatLiteralType) {
-        self.node = AST.Value(value: .number(value), commentsBefore: [], commentsAfter: [])
+        self.value = Numeric.double(value)
     }
 
     public init(integerLiteral value: IntegerLiteralType) {
-        self.node = AST.Value(value: .number(Double(value)), commentsBefore: [], commentsAfter: [])
+        self.value = Numeric.int(value)
     }
 
     public init(_ number: Float) {
-        self.node = AST.Value(value: .number(Double(number)), commentsBefore: [], commentsAfter: [])
+        self.value = Numeric.float(number)
     }
 
     public init(_ number: Int) {
-        self.node = AST.Value(value: .number(Double(number)), commentsBefore: [], commentsAfter: [])
+        self.value = Numeric.int(number)
     }
 
     public init(_ number: Double) {
-        self.node = AST.Value(value: .number(number), commentsBefore: [], commentsAfter: [])
+        self.value = Numeric.double(number)
+    }
+
+    public init(_ number: CGFloat) {
+        self.value = Numeric.cgFloat(number)
     }
 
 }
@@ -72,11 +128,11 @@ extension SION: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 extension SION: ExpressibleByBooleanLiteral {
 
     public init(booleanLiteral value: BooleanLiteralType) {
-        self.node = AST.Value(value: .bool(value), commentsBefore: [], commentsAfter: [])
+        self.value = value
     }
 
     public init(_ bool: Bool) {
-        self.node = AST.Value(value: .bool(bool), commentsBefore: [], commentsAfter: [])
+        self.value = bool
     }
 
 }
@@ -89,36 +145,51 @@ extension SION {
      - parameters:
          - unorderedDictionary: A Swift Dictionary to initialize from
      */
+    public init(unorderedDictionary: [String: ASTValue]) {
+        self.value = KeyedContainer(keyValuePairs: unorderedDictionary.map {
+            KeyValuePair(key: Key(name: $0.key), value: SION(value: $0.value))
+        })
+    }
+
+    public init(_ keyValues: KeyValuePairs<String, ASTValue>) {
+        self.value = KeyedContainer(keyValuePairs: keyValues.map {
+            KeyValuePair(key: Key(name: $0.key), value: SION(value: $0.value))
+        })
+    }
+
     public init(unorderedDictionary: [String: SION]) {
-        self.node = AST.KeyedContainer(keyValuePairs: unorderedDictionary.map {
-            AST.KeyValuePair(key: AST.Key(name: $0.key, commentsBefore: [], commentsAfter: []),
-                             value: AST.Value(value: $0.value.node.value, commentsBefore: [], commentsAfter: []))
-        }, commentsBefore: [], commentsAfter: [])
+        self.value = KeyedContainer(keyValuePairs: unorderedDictionary.map {
+            KeyValuePair(key: Key(name: $0.key), value: $0.value)
+        })
     }
 
     public init(_ keyValues: KeyValuePairs<String, SION>) {
-        self.node = AST.KeyedContainer(keyValuePairs: keyValues.map {
-            AST.KeyValuePair(key: AST.Key(name: $0.key, commentsBefore: [], commentsAfter: []),
-                             value: AST.Value(value: $0.value.node.value, commentsBefore: [], commentsAfter: []))
-        }, commentsBefore: [], commentsAfter: [])
+        self.value = KeyedContainer(keyValuePairs: keyValues.map {
+            KeyValuePair(key: Key(name: $0.key), value: $0.value)
+        })
+    }
+
+    public init(_ array: [ASTValue]) {
+        self.value = UnkeyedContainer(values: array.map {
+            SION(value: $0)
+        })
     }
 
     public init(_ array: [SION]) {
-        self.node = AST.UnkeyedContainer(values: array.map {
-            AST.Value(value: $0.node.value, commentsBefore: [], commentsAfter: [])
-        }, commentsBefore: [], commentsAfter: [])
+        self.value = UnkeyedContainer(values: array)
     }
 
-    public init(_ set: Set<SION>) {
-        self.init(Array(set))
-    }
-
+//
+//    public init(_ set: Set<ASTValue>) {
+//        self.init(Array(set))
+//    }
+//
 }
 
 extension SION {
 
     public init(_ date: Date) {
-        self.node = AST.Value(value: .date(date), commentsBefore: [], commentsAfter: [])
+        self.value = date
     }
 
 }

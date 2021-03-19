@@ -26,7 +26,7 @@ extension SION {
 
     public subscript(dynamicMember member: String) -> SION {
         get {
-            return value(forKey: member)
+            value(forKey: member)
         }
         set(newValue) {
             setValue(newValue, forKey: member)
@@ -35,7 +35,7 @@ extension SION {
 
     public subscript(_ key: String) -> SION {
         get {
-            return value(forKey: key)
+            value(forKey: key)
         }
         set(newValue) {
             setValue(newValue, forKey: key)
@@ -46,7 +46,7 @@ extension SION {
 
     public subscript(_ index: Int) -> SION {
         get {
-            return value(forIndex: index)
+            value(forIndex: index)
         }
         set(newValue) {
             setValue(newValue, forIndex: index)
@@ -56,36 +56,28 @@ extension SION {
     // MARK: - Subscripts
 
     internal func value(forKey key: String) -> SION {
-        switch node.value {
-        case let .keyedContainer(keyed):
-            return SION(node: keyed.value(for: key) ?? .undefined)
-        default:
-            return SION.undefined
-        }
+        (value as? KeyedContainer)?.value(for: key) ?? .undefined
     }
 
     mutating internal func setValue(_ newValue: SION, forKey key: String) {
         if isUndefined {
-            self.node = AST.KeyedContainer.with(value: newValue.node.value, forKey: key)
-        } else if let keyed = node as? AST.KeyedContainer {
-            keyed.setValue(newValue.node.value, forKey: key)
+            self.value = KeyedContainer.with(value: newValue, forKey: key)
+        } else if var keyed = value as? KeyedContainer {
+            keyed.setValue(newValue, forKey: key)
+            self.value = keyed
         }
     }
 
     internal func value(forIndex index: Int) -> SION {
-        switch node.value {
-        case let .unkeyedContainer(unkeyed):
-            return SION(node: unkeyed.value(at: index) ?? .undefined)
-        default:
-            return SION.undefined
-        }
+        (value as? UnkeyedContainer)?.value(at: index) ?? .undefined
     }
 
     mutating internal func setValue(_ newValue: SION, forIndex index: Int) {
         if isUndefined {
-            self.node = AST.UnkeyedContainer.with(newValue.node.value)
-        } else if let unkeyed = node as? AST.UnkeyedContainer {
-            unkeyed.setValue(newValue.node.value, at: index)
+            self.value = UnkeyedContainer(values: [newValue])
+        } else if var unkeyed = value as? UnkeyedContainer {
+            unkeyed.setValue(newValue, at: index)
+            self.value = unkeyed
         }
     }
 
@@ -93,101 +85,104 @@ extension SION {
 
     /// The value as a string, or nil
     public var string: String? {
-        guard case let .string(value) = (node as? AST.Value)?.value else { return nil }
-        return value
+        value as? String
     }
 
     /// The value as a string, or empty string
     public var stringValue: String {
-        return string ?? ""
+        string ?? ""
     }
 
     /// The value as a bool, or nil
     public var bool: Bool? {
-        guard case let .bool(value) = (node as? AST.Value)?.value else { return nil }
-        return value
+        value as? Bool
     }
 
     /// The value as a bool, or false
     public var boolValue: Bool {
-        return bool ?? false
+        bool ?? false
     }
 
     /// The value as a double, or nil
     public var double: Double? {
-        guard case let .number(value) = (node as? AST.Value)?.value else { return nil }
-        return value
+        (value as? Numeric)?.doubleValue
     }
 
     /// The value as a double, or 0.0
     public var doubleValue: Double {
-        return double ?? 0
+        double ?? 0
     }
 
     /// The value as an integer, or nil
     public var int: Int? {
-        guard let double = double else { return nil }
-        return Int(double)
+        (value as? Numeric)?.intValue
     }
 
     /// The value as an integer, or 0
     public var intValue: Int {
-        return int ?? 0
+        int ?? 0
     }
 
     /// The value as a float, or nil
     public var float: Float? {
-        guard let double = double else { return nil }
+        guard let double = (value as? Numeric)?.doubleValue else { return  nil }
         return Float(double)
     }
 
     /// The value as a float, or 0.0
     public var floatValue: Float {
-        return float ?? 0
+        float ?? 0
+    }
+
+    /// The value as a CGFloat, or nil
+    public var cgFloat: CGFloat? {
+        guard let double = (value as? Numeric)?.doubleValue else { return  nil }
+        return CGFloat(double)
+    }
+
+    /// The value as a CGFloat, or 0.0
+    public var cgFloatValue: CGFloat {
+        cgFloat ?? 0
     }
 
     /// The value as a date, or nil
     public var date: Date? {
-        guard case let .date(value) = (node as? AST.Value)?.value else { return nil }
-        return value
+        value as? Date
     }
 
     /// The value as a date, or `Date.distantPast`
     public var dateValue: Date {
-        return date ?? Date.distantPast
+        date ?? Date.distantPast
     }
 
     /// The value as an array, or nil
     public var array: [SION]? {
-        guard case let .unkeyedContainer(value) = (node as? AST.Value)?.value else { return nil }
-        return value.values.map { SION(node: $0) }
+        (value as? UnkeyedContainer)?.values
     }
 
     /// The value as an array, or empty array
     public var arrayValue: [SION] {
-        return array ?? []
+        array ?? []
     }
 
     /// The value as a dictionary, or nil. To preserve key order, use `orderedKeyValuePairs` instead.
     public var dictionary: [String: SION]? {
-        guard case let .keyedContainer(value) = (node as? AST.Value)?.value else { return nil }
-        return value.keyValuePairs.reduce(into: [String: SION]()) { $0[$1.key.name] = SION(node: $1.value) }
+        (value as? KeyedContainer)?.keyValuePairs.reduce(into: [String: SION]()) { $0[$1.key.name] = $1.value }
     }
 
     /// The value as a dictionary, or empty dictionary. To preserve key order, use `orderedKeyValuePairsValue` instead.
     public var dictionaryValue: [String: SION] {
-        return dictionary ?? [:]
+        dictionary ?? [:]
     }
 
     /// If it is possible to represent, returns the value as an array of `(String, SION)` tuples, or nil
     public var keyValuePairs: [(String, SION)]? {
-        guard case let .keyedContainer(value) = (node as? AST.Value)?.value else { return nil }
-        return value.keyValuePairs.map { ($0.key.name, SION(node: $0.value)) }
+        (value as? KeyedContainer)?.keyValuePairs.map { ($0.key.name, $0.value) }
     }
 
     /// The value as an array of `(String, SION)` tuples, or an empty array
     public var keyValuePairsValue: [(String, SION)]? {
-        return keyValuePairs ?? []
+        keyValuePairs ?? []
     }
 
 }

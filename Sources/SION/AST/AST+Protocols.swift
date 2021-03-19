@@ -1,16 +1,16 @@
 //
-//  SION+Comparison.swift
+//  AST+Protocols.swift
 //  SION
 //
-//  Created by Karim Nassar on 1/14/18.
-//  Copyright © 2018 Hungry Melon Studio LLC. All rights reserved.
+//  Created by Karim Nassar on 3/18/21.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//  
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,15 +20,17 @@
 
 import Foundation
 
-extension SION: Hashable {
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(node.value)
-    }
-
-    public static func == (lhs: SION, rhs: SION) -> Bool {
-        lhs.node.value == rhs.node.value
-    }
+protocol ASTNode: CustomDebugStringConvertible {
 
 }
 
+protocol ASTCommentableNode: ASTNode {
+    var headComments: [Comment] { get set }
+    var tailComments: [Comment] { get set }
+}
+
+protocol ASTContainer: ASTValue {
+
+    var isEmpty: Bool { get }
+
+}
