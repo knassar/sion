@@ -1,9 +1,9 @@
 //
-//  SION.h
+//  SION+Comparison.swift
 //  SION
 //
-//  Created by Karim Nassar on 5/20/17.
-//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
+//  Created by Karim Nassar on 1/14/18.
+//  Copyright © 2018 Hungry Melon Studio LLC. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,14 +18,17 @@
 //  limitations under the License.
 //
 
-#import <Cocoa/Cocoa.h>
+import Foundation
 
-//! Project version number for SION.
-FOUNDATION_EXPORT double SIONVersionNumber;
+extension SION: Hashable {
 
-//! Project version string for SION.
-FOUNDATION_EXPORT const unsigned char SIONVersionString[];
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(node.value)
+    }
 
-// In this header, you should import all the public headers of your framework using statements like #import <SION/PublicHeader.h>
+    public static func == (lhs: SION, rhs: SION) -> Bool {
+        lhs.node.value == rhs.node.value
+    }
 
+}
 

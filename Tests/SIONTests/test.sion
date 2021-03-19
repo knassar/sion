@@ -36,7 +36,8 @@
             "boo": true
         }
     },
-    "keys": { // we can skip quoting dictionary keys
+    "keys": {
+        // we can skip quoting dictionary keys
         // if there is no whitespace in them
         foo: "yay!",
         // plus we can use single quotes to avoid escaping doubles

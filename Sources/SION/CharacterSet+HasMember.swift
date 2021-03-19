@@ -1,16 +1,16 @@
 //
-//  OrderedKey.swift
+//  CharacterSet+HasMember.swift
 //  SION
 //
-//  Created by Karim Nassar on 1/14/18.
-//  Copyright © 2018 HungryMelonStudios LLC. All rights reserved.
+//  Created by Karim Nassar on 3/18/21.
+//  Copyright © 2017 Hungry Melon Studio LLC. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at
-//  
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  
+//
 //  Unless required by applicable law or agreed to in writing, software
 //  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,24 +20,17 @@
 
 import Foundation
 
-extension SION {
+extension CharacterSet {
 
-    struct OrderedKey: SIONKey, Hashable {
-        let key: String
-        let order: Int
-
-        init(_ key: String, _ order: Int = 0) {
-            self.key = key
-            self.order = order
+    func hasMember(_ character: Character) -> Bool {
+        var found = true
+        for ch in String(character).utf16 {
+            if !(self as NSCharacterSet).characterIsMember(ch) {
+                found = false
+            }
         }
-
-        var hashValue: Int {
-            return key.hashValue
-        }
-
-        static func == (lhs: OrderedKey, rhs: OrderedKey) -> Bool {
-            return lhs.key == rhs.key
-        }
+        return found
     }
 
 }
+

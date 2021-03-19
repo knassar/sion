@@ -20,39 +20,24 @@
 
 import Foundation
 
-/** Represents a key in either a SION dictionary or array */
-public protocol SIONKey {}
-extension String: SIONKey {}
-extension Int: SIONKey {}
-
+@dynamicMemberLookup
 public struct SION {
 
-    var value: Any? = nil
-    var type = ValueType.undefined
+    var node: ASTWrappableNode
     public internal(set) var rawString: String? = nil
 
-    init() {}
-
-    enum ValueType {
-        case array
-        case bool
-        case date
-        case dictionary
-        case null
-        case number
-        case string
-        case undefined
+    init() {
+        self.node = AST.Value.undefined
     }
 
     /// an undefined SION value
-    public static let undefined = SION(type: .undefined)
+    public static let undefined = SION(node: AST.Value.undefined)
 
     /// a null SION value
-    public static let null = SION(type: .null)
+    public static let null = SION(node: AST.Value.null)
 
-    init(type: SION.ValueType, value: Any? = nil) {
-        self.value = value
-        self.type = type
+    init(node: ASTWrappableNode) {
+        self.node = node
     }
 
     /**
@@ -68,11 +53,9 @@ public struct SION {
     public init(raw: String) throws {
         self.rawString = raw
         do {
-            let parsed = try Parser.parse(raw)
-            self.type = parsed.type
-            self.value = parsed.value
+            self.node = try ASTParser.parse(raw)
         }
-        catch let parseError as Parser.Error {
+        catch let parseError as ASTParser.Error {
             throw Error.init(parseError: parseError)
         }
     }
@@ -96,52 +79,79 @@ public struct SION {
 
     /// isEmpty returns true for `undefined`, `null`, and for empty strings, dictionaries, and arrays
     public var isEmpty: Bool {
-        switch type {
-        case .undefined, .null,
-             .array where (value as? Array ?? []).isEmpty,
-             .dictionary where (value as? Dictionary ?? [:]).isEmpty,
-             .string where (value as? String ?? "").isEmpty:
-            return true
+        switch node {
+        case let container as ASTContainer:
+            return container.isEmpty
+
+        case let value as AST.Value:
+            switch value.value {
+            case .undefined, .null:
+                return true
+            case let .string(string):
+                return string.isEmpty
+            default:
+                return false
+            }
         default:
             return false
         }
     }
 
     public var isNull: Bool {
-        return type == .null
+        return (node as? AST.Value) == AST.Value.null
     }
 
     public var isUndefined: Bool {
-        return type == .undefined
+        switch node.value {
+        case .undefined:
+            return true
+        default:
+            return false
+        }
     }
 
     public var isArray: Bool {
-        return type == .array && value is [SION]
+        return node is AST.UnkeyedContainer
     }
     
     public var isBool: Bool {
-        return type == .bool && value is Bool
+        switch (node as? AST.Value)?.value {
+        case .bool:
+            return true
+        default:
+            return false
+        }
     }
     
     public var isDate: Bool {
-        return type == .date && value is Date
+        switch (node as? AST.Value)?.value {
+        case .date:
+            return true
+        default:
+            return false
+        }
     }
     
     public var isDictionary: Bool {
-        return type == .dictionary && (value is [String: SION] || value is [OrderedKey: SION])
-    }
-
-    /// `true` if isArray or isDictionary where key order has been preserved
-    public var isOrdered: Bool {
-        return isArray || (type == .dictionary && value is [OrderedKey: SION])
+        return node is AST.KeyedContainer
     }
 
     public var isNumber: Bool {
-        return type == .number && value is Double
+        switch (node as? AST.Value)?.value {
+        case .number:
+            return true
+        default:
+            return false
+        }
     }
     
     public var isString: Bool {
-        return type == .string && value is String
+        switch (node as? AST.Value)?.value {
+        case .string:
+            return true
+        default:
+            return false
+        }
     }
-}
 
+}

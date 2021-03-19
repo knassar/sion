@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>FILEHEADER</key>
-    <string>
-//  ___FILENAME___
-//  ___PACKAGENAME___
 //
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright © ___YEAR___ ___ORGANIZATIONNAME___ All rights reserved.
+//  SION+DebugStringConvertible.swift
+//  SION
+//
+//  Created by Karim Nassar on 1/20/19.
+//  Copyright © 2019 HungryMelonStudios LLC. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -21,6 +16,14 @@
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
-//</string>
-</dict>
-</plist>
+//
+
+import Foundation
+
+extension SION: CustomDebugStringConvertible {
+
+    public var debugDescription: String {
+        node.debugDescription
+    }
+
+}

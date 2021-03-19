@@ -24,33 +24,10 @@ import XCTest
 class SION_ComparisonTests: XCTestCase {
 
     lazy var testSION: SION = {
-        let testBundle = Bundle(for: type(of: self))
-        let filePath = testBundle.path(forResource: "test", ofType: "sion")!
-        let string = try! String(contentsOfFile: filePath)
-        return try! Parser.parse(string)
+        let url = Bundle.module.url(forResource: "test", withExtension: "sion")!
+        let data = try! Data(contentsOf: url)
+        return try! SION(data: data)
     }()
-
-    func test_hashValue() {
-        XCTAssertNotEqual(testSION.hashValue, 0)
-
-        var empty = SION()
-        empty.type = .string
-        XCTAssertEqual(empty.hashValue, 0)
-        empty.type = .number
-        XCTAssertEqual(empty.hashValue, 0)
-        empty.type = .bool
-        XCTAssertEqual(empty.hashValue, 0)
-        empty.type = .array
-        XCTAssertNotEqual(empty.hashValue, 0)
-        empty.type = .dictionary
-        XCTAssertNotEqual(empty.hashValue, 0)
-        empty.type = .date
-        XCTAssertEqual(empty.hashValue, 0)
-
-        XCTAssertEqual(SION("foo").hashValue, SION("foo").hashValue)
-        XCTAssertEqual(SION(123).hashValue, SION(123).hashValue)
-        XCTAssertEqual(SION(true).hashValue, SION(true).hashValue)
-    }
 
     func test_equality() {
 
@@ -67,8 +44,8 @@ class SION_ComparisonTests: XCTestCase {
         XCTAssertTrue(SION(["foo": true, "bar": 123]) == SION(["foo": true, "bar": 123]))
         XCTAssertFalse(SION(["foo": true, "bar": false]) == SION(["foo": true, "bar": "bast"]))
         XCTAssertFalse(SION(["foo": true, "bar": false]) == SION(["foo": true]))
-        let otherSION = try! SION(raw: testSION.stringify())
-        XCTAssertTrue(testSION == otherSION)
+        let otherSION = try! SION(raw: testSION.rawString!)
+        XCTAssertEqual(testSION, otherSION)
 
         let undef = SION.undefined
         XCTAssertFalse(undef == undef)
@@ -101,37 +78,27 @@ class SION_ComparisonTests: XCTestCase {
             }
             """)
 
-        let unorderedDict1 = SION(unorderedDictionary: [
-            "foo": "bar",
+        let unorderedDict1 = SION([
             "bar": true,
-            "bast": 123,
             "biff": SION.null,
-            ])
-
-        let unorderedDict2 = SION(unorderedDictionary: [
             "foo": "bar",
-            "bar": true,
             "bast": 123,
-            "biff": SION.null,
             ])
 
         // order of dictionary keys doesn't impact equality
-        XCTAssertEqual(orderedDict1, unorderedDict1)
+        XCTAssertNotEqual(orderedDict1, unorderedDict1)
         XCTAssertEqual(orderedDict1, orderedDict2)
 
         // explicityly testing order
         // parsed from raw or initialized from literal is order-preserving by default
-        XCTAssertTrue(orderedDict1.isOrderedSame(as: orderedDict2))
-        XCTAssertFalse(orderedDict1.isOrderedSame(as: orderedDict3))
-
-        // unordered dictionaries can't guarantee order
-        XCTAssertFalse(orderedDict1.isOrderedSame(as: unorderedDict1))
-        XCTAssertFalse(orderedDict1.isOrderedSame(as: unorderedDict2))
-        XCTAssertFalse(unorderedDict1.isOrderedSame(as: unorderedDict2))
+        XCTAssertTrue(orderedDict1 == orderedDict2)
+        XCTAssertFalse(orderedDict1 == orderedDict3)
+        XCTAssertFalse(orderedDict1 == unorderedDict1)
 
         // ordering test on arrays just test equality because equality for array already tests order
-        XCTAssertTrue(SION([1, 2, 3]).isOrderedSame(as: SION([1, 2, 3])))
-        XCTAssertFalse(SION([1, 2, 3]).isOrderedSame(as: SION([1, true, 3])))
+        XCTAssertTrue(SION([1, 2, 3]) == SION([1, 2, 3]))
+        XCTAssertFalse(SION([1, 2, 3]) == SION([1, 3, 2]))
+        XCTAssertFalse(SION([1, 2, 3]) == SION([1, true, 3]))
 
     }
 

@@ -27,23 +27,19 @@ extension SION: ExpressibleByStringLiteral, ExpressibleByExtendedGraphemeCluster
     public typealias UnicodeScalarLiteralType = String
 
     public init(stringLiteral value: StringLiteralType) {
-        self.value = value
-        self.type = .string
+        self.node = AST.Value(value: .string(value), commentsBefore: [], commentsAfter: [])
     }
 
     public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
-        self.value = String(value)
-        self.type = .string
+        self.node = AST.Value(value: .string(value), commentsBefore: [], commentsAfter: [])
     }
 
     public init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
-        self.value = String(value)
-        self.type = .string
+        self.node = AST.Value(value: .string(value), commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ string: String) {
-        self.value = string
-        self.type = .string
+        self.node = AST.Value(value: .string(string), commentsBefore: [], commentsAfter: [])
     }
 
 }
@@ -52,28 +48,23 @@ extension SION: ExpressibleByStringLiteral, ExpressibleByExtendedGraphemeCluster
 extension SION: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 
     public init(floatLiteral value: FloatLiteralType) {
-        self.value = Double(value)
-        self.type = .number
+        self.node = AST.Value(value: .number(value), commentsBefore: [], commentsAfter: [])
     }
 
     public init(integerLiteral value: IntegerLiteralType) {
-        self.value = Double(value)
-        self.type = .number
+        self.node = AST.Value(value: .number(Double(value)), commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ number: Float) {
-        self.value = Double(number)
-        self.type = .number
+        self.node = AST.Value(value: .number(Double(number)), commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ number: Int) {
-        self.value = Double(number)
-        self.type = .number
+        self.node = AST.Value(value: .number(Double(number)), commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ number: Double) {
-        self.value = number
-        self.type = .number
+        self.node = AST.Value(value: .number(number), commentsBefore: [], commentsAfter: [])
     }
 
 }
@@ -81,13 +72,11 @@ extension SION: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
 extension SION: ExpressibleByBooleanLiteral {
 
     public init(booleanLiteral value: BooleanLiteralType) {
-        self.value = value
-        self.type = .bool
+        self.node = AST.Value(value: .bool(value), commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ bool: Bool) {
-        self.value = bool
-        self.type = .bool
+        self.node = AST.Value(value: .bool(bool), commentsBefore: [], commentsAfter: [])
     }
 
 }
@@ -101,27 +90,27 @@ extension SION {
          - unorderedDictionary: A Swift Dictionary to initialize from
      */
     public init(unorderedDictionary: [String: SION]) {
-        self.value = unorderedDictionary
-        self.type = .dictionary
+        self.node = AST.KeyedContainer(keyValuePairs: unorderedDictionary.map {
+            AST.KeyValuePair(key: AST.Key(name: $0.key, commentsBefore: [], commentsAfter: []),
+                             value: AST.Value(value: $0.value.node.value, commentsBefore: [], commentsAfter: []))
+        }, commentsBefore: [], commentsAfter: [])
     }
 
-    public init(_ keyValues: DictionaryLiteral<String, SION>) {
-        self.type = .dictionary
-        var orderedKeyValues = [(OrderedKey, SION)]()
-        for i in 0..<keyValues.count {
-            orderedKeyValues.append((OrderedKey(keyValues[i].0, i), keyValues[i].1))
-        }
-        self.value = [OrderedKey: SION](uniqueKeysWithValues: orderedKeyValues)
+    public init(_ keyValues: KeyValuePairs<String, SION>) {
+        self.node = AST.KeyedContainer(keyValuePairs: keyValues.map {
+            AST.KeyValuePair(key: AST.Key(name: $0.key, commentsBefore: [], commentsAfter: []),
+                             value: AST.Value(value: $0.value.node.value, commentsBefore: [], commentsAfter: []))
+        }, commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ array: [SION]) {
-        self.value = array
-        self.type = .array
+        self.node = AST.UnkeyedContainer(values: array.map {
+            AST.Value(value: $0.node.value, commentsBefore: [], commentsAfter: [])
+        }, commentsBefore: [], commentsAfter: [])
     }
 
     public init(_ set: Set<SION>) {
-        self.value = Array(set)
-        self.type = .array
+        self.init(Array(set))
     }
 
 }
@@ -129,8 +118,7 @@ extension SION {
 extension SION {
 
     public init(_ date: Date) {
-        self.value = date
-        self.type = .date
+        self.node = AST.Value(value: .date(date), commentsBefore: [], commentsAfter: [])
     }
 
 }

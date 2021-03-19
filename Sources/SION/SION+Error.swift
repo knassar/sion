@@ -34,12 +34,19 @@ extension SION {
         /// Could not parse valid SION from the received string. Includes a description of the syntax error and a portion of the raw string around the syntax error.
         case syntax(description: String, context: String)
 
-        init(parseError: Parser.Error) {
+        case stringifyFailed(description: String, path: String)
+
+        init(parseError: ASTParser.Error) {
             let location: Int
             let descr: String
             let rawString: String
             let index: String.Index
             switch parseError {
+            case let .nonDocumentRoot(raw):
+                location = 0
+                descr = "No Document Root Found"
+                rawString = raw
+                index = raw.startIndex
             case let .syntax(idx, raw):
                 location = raw.distance(from: raw.startIndex, to: idx)
                 descr = "Syntax Error"
