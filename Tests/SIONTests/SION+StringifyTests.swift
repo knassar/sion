@@ -93,7 +93,7 @@ class SION_StringifyTests: XCTestCase {
                 biff: "bast",
                 date: 2017-04-01, /* Foo Bar */
                 array: ["foo", 'bar', true, false, null],
-                dub: -23.56,
+                dub: -23.56, // line
                 "and then": "foo'bar",
                 "and plus": 'foo"bar'
             }
@@ -137,7 +137,7 @@ class SION_StringifyTests: XCTestCase {
                 false,
                 null,
             ],
-            dub: -23.56,
+            dub: -23.56, // line
             "and then": "foo'bar",
             "and plus": 'foo"bar',
         }
@@ -226,79 +226,103 @@ class SION_StringifyTests: XCTestCase {
     }
 
     func test_stringifyRootComments() {
-//        var sion = try! SION(parsing: """
-//            {
-//               'foo': 'bar',
-//                biff: "bast",
-//            }
-//            """)
-//
-//        sion.headComments = [
-//            try! Comment(value: "head block comment", address: .header, style: .block),
-//            try! Comment(value: "head line comment", address: .header, style: .line),
-//            try! Comment(value: "head inline-block comment", address: .header, style: nil),
-//        ]
-//
-//        sion.tailComments = [
-//            try! Comment(value: "tail block comment", address: .footer, style: .block),
-//            try! Comment(value: "tail line comment", address: .footer, style: .line),
-//            try! Comment(value: "tail inline-block comment", address: .footer, style: nil),
-//        ]
-//
-//        let expected = """
-//            /*
-//              head block comment
-//            */
-//            // head line comment
-//            /* head inline-block comment */
-//            {
-//                foo: "bar",
-//                biff: "bast",
-//            }
-//            /*
-//              tail block comment
-//            */
-//            // tail line comment
-//            /* tail inline-block comment */
-//            """
-//
-//        XCTAssertEqual(try! sion.stringify(options: [.pretty]), expected)
+        var sion = try! SION(parsing: """
+            {
+               'foo': 'bar',
+                biff: "bast",
+            }
+            """)
+
+        sion.addHeadComment("head block", preferBlock: true)
+        sion.addHeadComment("head line")
+        sion.addHeadComment("""
+        head
+        implicit
+        block
+        """)
+
+        sion.addTailComment("tail block", preferBlock: true)
+        sion.addTailComment("tail line")
+        sion.addTailComment("""
+        tail
+        implicit
+        block
+        """)
+
+        let expected = """
+            /*
+              head block
+            */
+            // head line
+            /*
+              head
+              implicit
+              block
+            */
+            {
+                foo: "bar",
+                biff: "bast",
+            }
+            /*
+              tail block
+            */
+            // tail line
+            /*
+              tail
+              implicit
+              block
+            */
+            """
+
+        XCTAssertEqual(sion.stringify(options: [.pretty]), expected)
     }
 
-    func test_arrayComments() {
-//
-//        var sion = SION([
-//                "one",
-//                true,
-//                "three",
-//                "four",
-//                5,
-//            ])
-//
-//        try! sion.insertLineComment("line comment", at: 1)
-//        try! sion.insertComment("inline block", before: 1)
-//        try! sion.insertComment("block comment", as: .block, before: 3)
-//        try! sion.insertComment("after block comment", as: .block, after: 3)
-//
-//        let expected = """
-//            [
-//                "one",
-//                /* inline block */
-//                true, // line comment
-//                "three",
-//                /*
-//                  block comment
-//                */
-//                "four",
-//                /*
-//                  after block comment
-//                */
-//                5.0,
-//            ]
-//            """
-//
-//        XCTAssertEqual(try! sion.stringify(options: [.pretty]), expected)
-//
+    func test_stringifyValueComments() {
+
+        var sion = SION([
+                "one",
+                true,
+                SION([
+                    "foo": "bar",
+                    "biff": "boff",
+                ]),
+                "three",
+                "four",
+                5,
+            ])
+
+        sion[1].addHeadComment("inline before true")
+        sion[1].addTailComment("line tail true")
+        var keyed = sion[2].value as! KeyedContainer
+        keyed.addHeadComment("key foo line", forKey: "foo")
+        sion[2].value = keyed
+        sion[2].biff.addTailComment("after boff")
+        sion[4].addHeadComment("head block comment", preferBlock: true)
+        sion[4].addTailComment("tail block comment", preferBlock: true)
+
+        let expected = """
+            [
+                "one",
+                // inline before true
+                true, // line tail true
+                {
+                    // key foo line
+                    foo: "bar",
+                    biff: "boff", // after boff
+                },
+                "three",
+                /*
+                  head block comment
+                */
+                "four", /*
+                  tail block comment
+                */
+                5.0,
+            ]
+            """
+
+        XCTAssertEqual(sion.stringify(options: [.pretty]), expected)
+
     }
 
 }

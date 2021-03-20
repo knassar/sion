@@ -157,6 +157,12 @@ class SIONPrinter: Printer {
         switch comment {
         case let .inline(text):
             return "//" + text
+        case let .block(text) where text.containsMember(of: .newlines):
+            var lines = text.components(separatedBy: "\n")
+            if lines.first == "" {
+                lines.removeFirst()
+            }
+            return "/*\n" + lines.map { indent() + $0 } .joined(separator: "\n") + "*/"
         case let .block(text):
             return "/*" + text + "*/"
         }

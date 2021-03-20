@@ -24,6 +24,15 @@ enum Comment: ASTNode, Hashable {
     case block(String)
     case inline(String)
 
+    var text: String {
+        switch self {
+        case let .block(text):
+            return text
+        case let .inline(text):
+            return text
+        }
+    }
+
     var debugDescription: String {
         switch self {
         case let .block(text):
@@ -32,6 +41,14 @@ enum Comment: ASTNode, Hashable {
             return "<SION:InlineComment: '\(text)'>"
         }
 
+    }
+
+    static func with(_ text: String, preferBlock: Bool) -> Comment {
+        if text.containsMember(of: .newlines) || preferBlock {
+            return .block(text.components(separatedBy: .newlines).map { "\n  \($0)" } .joined() + "\n")
+        } else {
+            return .inline(" \(text)")
+        }
     }
 
 }

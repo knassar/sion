@@ -1,5 +1,5 @@
 //
-//  CharacterSet+HasMember.swift
+//  CharacterSet+Utils.swift
 //  SION
 //
 //  Created by Karim Nassar on 3/18/21.
@@ -34,3 +34,15 @@ extension CharacterSet {
 
 }
 
+extension String {
+
+    func containsMember(of characterSet: CharacterSet) -> Bool {
+        for char in self.utf16 {
+            if (characterSet as NSCharacterSet).characterIsMember(char) {
+                return true
+            }
+        }
+        return false
+    }
+
+}
