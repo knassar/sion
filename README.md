@@ -3,7 +3,7 @@
 SION is an extension of JSON intended for use as a configuration and structured data file format. All valid JSON is valid SION. SION adds the following features to both simplify and improve on JSON.
 
 * Comments using either `//` for line comments or `/*  */` for block comments
-    - Comments are preserved through parsing, and serialization
+    - Comments are preserved through parsing and re-serialization
 * Dictionary keys do not need to be quoted except when containing whitespace or `:` characters.
 * String values and dictionary keys can use either double- or single-quotes obviating the need to escape quotations marks in the strings or keys in many cases.
 * Dictionaries preserve key order by default
@@ -16,7 +16,7 @@ SION is an extension of JSON intended for use as a configuration and structured 
  
 See the included sample file at `Tests/SIONTests/test.sion`
 
-The Swift interface for the SION type borrows heavily from the great SwiftyJSON project.
+The Swift interface for the SION type borrows stylistically from the great SwiftyJSON project.
  
 ## Why?
 
@@ -27,17 +27,6 @@ I created SION for use as a configuration & data format for various personal pro
 ## Is that it?
 
 The Date handling needs some refinement, but it works for what I need now. 
-
-I also may wind up adding more literal value types to SION. I'm considering how to include parsing of enums to static Swift enum types.
-
-# Requirements
-
-* Xcode 12+
-* Swift 5+
-
-# Installation
-
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # Usage Examples
 
