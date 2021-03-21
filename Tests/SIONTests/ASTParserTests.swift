@@ -137,6 +137,16 @@ class ASTParserTests: XCTestCase {
 
     }
 
+    func test_unquotedLiteral() {
+        let dict = try! ASTParser.parse("""
+        {
+            key: unquotedLiteral,
+        }
+        """) as! KeyedContainer
+
+        XCTAssertEqual(dict.value(for: "key")?.stringValue, "unquotedLiteral")
+    }
+
     func test_overallParse() {
         guard
             let filePath = Bundle.module.path(forResource: "test", ofType: "sion"),

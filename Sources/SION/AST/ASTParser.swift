@@ -148,7 +148,6 @@ class ASTParser {
 extension ASTParser {
 
     enum Error: Swift.Error {
-        case none
         case nonDocumentRoot(in: String)
         case syntax(at: String.Index, in: String)
         case invalidKey(at: String.Index, in: String)
@@ -178,7 +177,7 @@ private enum Token: Character {
     static let undelimitedKeyTerminators = CharacterSet(charactersIn: "/:").union(.whitespacesAndNewlines)
     static let numerics = CharacterSet(charactersIn: "0123456789-.")
     // characters that start a literal value:
-    static let literals = CharacterSet(charactersIn: "0123456789-.tTfFnN")
+    static let literals = CharacterSet.letters.union(CharacterSet(charactersIn: "0123456789-."))
 }
 
 extension ASTParser {
@@ -387,9 +386,12 @@ extension ASTParser {
                 } else if let date = parseDate(value) {
                     return date
                 }
+            } else {
+                // if we can't find a value literal, treat it as a string
+                return accumulateWhile { !Token.valueTerminators.hasMember($0) } .trimmingCharacters(in: Token.whitespacesAndNewlines)
             }
         }
-        // if we can't find a value literal
+        // if we can't form a value literal
         throw Error.syntax(at: index, in: raw)
     }
 

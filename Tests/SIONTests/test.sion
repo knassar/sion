@@ -33,7 +33,7 @@
             "str": "ha!",
             "num": 321,
             "nil": null,
-            "boo": true
+            "boo": true,
         }
     },
     "keys": {
@@ -51,6 +51,9 @@
         2013-06-13, // date literals!
         2011-01-10 08:01:00, // date time literals!
         { 'nesting': "dictionaries" /* of course */ },
-        [ 'nesting', 'arrays', 'natch' ]
-    ]
+        [ 'nesting', 'arrays', 'natch' ],
+        
+        // Unquoted string literals with no spaces are treated as strings:
+        someEnumValue,
+    ],
 }

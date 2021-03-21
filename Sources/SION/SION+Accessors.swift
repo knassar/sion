@@ -185,5 +185,32 @@ extension SION {
         keyValuePairs ?? []
     }
 
+    // MARK: - Raw Value Converters
+
+    public func `as`<T: RawRepresentable>(_ type: T.Type) -> T? where T.RawValue == String {
+        guard let string = string else { return nil }
+        return T.init(rawValue: string)
+    }
+
+    public func `as`<T: RawRepresentable>(_ type: T.Type) -> T? where T.RawValue == Int {
+        guard let integer = int else { return nil }
+        return T.init(rawValue: integer)
+    }
+
+    public func `as`<T: RawRepresentable>(_ type: T.Type) -> T? where T.RawValue == Double {
+        guard let double = double else { return nil }
+        return T.init(rawValue: double)
+    }
+
+    public func `as`<T: RawRepresentable>(_ type: T.Type) -> T? where T.RawValue == Float {
+        guard let float = float else { return nil }
+        return T.init(rawValue: float)
+    }
+
+    public func `as`<T: RawRepresentable>(_ type: T.Type) -> T? where T.RawValue == CGFloat {
+        guard let cgFloat = cgFloat else { return nil }
+        return T.init(rawValue: cgFloat)
+    }
+
 }
 

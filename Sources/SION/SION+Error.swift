@@ -62,9 +62,6 @@ extension SION {
                 descr = "Invalid Value"
                 rawString = raw
                 index = idx
-            case .none:
-                self = .unknown
-                return
             }
 
             var leading = index

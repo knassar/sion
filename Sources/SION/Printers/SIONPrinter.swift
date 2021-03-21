@@ -138,20 +138,6 @@ class SIONPrinter: Printer {
         }
     }
 
-//    func printIndentComment(_ comment: Comment) -> String {
-//        let lEnd = lineEnd()
-//        let lPad = indent()
-//
-//        switch comment.style {
-//        case .some(.line):
-//            return printComment(comment)
-//        case .none where comment.isSingleLine:
-//            return lPad + printComment(comment)
-//        case .some(.block), .none:
-//            return lPad + printComment(comment).replacingOccurrences(of: lEnd, with: lEnd + lPad)
-//        }
-//    }
-
     func printComment(_ comment: Comment) -> String {
         guard options.includeComments else { return "" }
         switch comment {

@@ -3,6 +3,7 @@
 SION is an extension of JSON intended for use as a configuration and structured data file format. All valid JSON is valid SION. SION adds the following features to both simplify and improve on JSON.
 
 * Comments using either `//` for line comments or `/*  */` for block comments
+    - Comments are preserved through parsing, and serialization
 * Dictionary keys do not need to be quoted except when containing whitespace or `:` characters.
 * String values and dictionary keys can use either double- or single-quotes obviating the need to escape quotations marks in the strings or keys in many cases.
 * Dictionaries preserve key order by default
@@ -11,8 +12,9 @@ SION is an extension of JSON intended for use as a configuration and structured 
     * `YYYY/MM/DD`
     * `YYYY-MM-DD HH:mm:ss`
     * `YYYY/MM/DD HH:mm:ss`
+* String values with no whitespaces can be left unquoted, for example when acting as enum literals
  
-See the included sample file at [`SIONTests/test.sion`](https://bitbucket.org/karimnassar/sion/src/d6839dacc4ffd0909995ebdec267533a465b8628/SIONTests/test.sion?at=master&fileviewer=file-view-default)
+See the included sample file at `Tests/SIONTests/test.sion`
 
 The Swift interface for the SION type borrows heavily from the great SwiftyJSON project.
  
@@ -26,12 +28,12 @@ I created SION for use as a configuration & data format for various personal pro
 
 The Date handling needs some refinement, but it works for what I need now. 
 
-I also may wind up adding more literal value types to SION as features like conditional conformance become available in Swift.
+I also may wind up adding more literal value types to SION. I'm considering how to include parsing of enums to static Swift enum types.
 
 # Requirements
 
-* Xcode 9+
-* Swift 4+
+* Xcode 12+
+* Swift 5+
 
 # Installation
 
@@ -49,11 +51,12 @@ I also may wind up adding more literal value types to SION as features like cond
 ## Initialize from literals
 
 ```
+    // order is preserved!
     let sion = SION([
         "foo": "bar",
         "biff": 12345,
         "bast": true
-    ])    
+    ])
 ```
 
 ## Accessing Properties
@@ -61,16 +64,25 @@ I also may wind up adding more literal value types to SION as features like cond
 ```
     let bar = sion["foo"].string ?? "nothing" // String?
     let foo = sion["foo"].stringValue // String
-    let maybeADeepValue = sion["foo"]["bar"][3]["bast"].int // Int?
-    let variadicAccess = sion["foo", "bar", 3, "bast"].intValue  // Int
+    let maybeADeepValue = sion[someKey][someOtherKey][anIntIndex]["bast"].int // Int?
+    let dynamicAccess = sion.foo.bar[3].bast.intValue  // Int
+    let anEnumValue = sion.foo.as(MyEnum.self) // MyEnum?
 ```
 
-## Auto, Lazy Deep-intialization
+## Direct Assignment
 
 ```
     var sion = SION()
-    sion["foo", "bar", 3, "bast"] = 42
-    sion.stringify(.json) // {"foo":{"bar":[null,null,null,{"bast":42}]}}
+    sion["the answer"] = 42
+    sion["the question"] = "What do you get when you multiply six by nine?"
+    sion.stringify(.json) // {"the answer":42,"the question":"What do you get when you multiply six by nine?"}
+    
+    var sion2 = SION()
+    for i in 0..<1000 { 
+        sion2[i] = "monkey\(i + 1)"
+    }
+    sion2.stringify(.json) // ["monkey1","monkey2","monkey3",...
+
 ```
 
 ## Output to String with Options
@@ -78,6 +90,6 @@ I also may wind up adding more literal value types to SION as features like cond
 ```
     sion.stringify(.pretty) // formatted for easy reading. Key order of dictionaries is preserved by default
     sion.stringify(.json) // outputs valid JSON
-    sion.stringify([.sortKeys, .noTrailingComma]) // other options
+    sion.stringify([.sortKeys, .noTrailingComma, .stripComments]) // other options
 ```
 

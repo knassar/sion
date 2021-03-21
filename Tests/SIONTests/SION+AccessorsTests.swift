@@ -106,4 +106,33 @@ class SION_AccessorsTests: XCTestCase {
 
     }
 
+    func test_rawRepresentableConversion() {
+        let sion = try! SION(parsing: """
+        {
+            foo: bar,
+            biff: boff,
+            blargh: 12,
+        }
+        """)
+
+        enum Foo: String {
+            case be, bar, bast
+        }
+
+        enum Biff: String {
+            case baff, boff, boof
+        }
+
+        enum Blargh: Double {
+            case low = 1.5
+            case medium = 12
+            case high = 87.3
+        }
+
+        XCTAssertEqual(sion.foo.as(Foo.self), .bar)
+        XCTAssertEqual(sion.biff.as(Biff.self), .boff)
+        XCTAssertEqual(sion.blargh.as(Blargh.self), .medium)
+
+    }
+
 }
